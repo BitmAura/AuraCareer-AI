@@ -4,7 +4,7 @@ import { defaultMetadata, siteConfig } from "@/lib/seo/site";
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: `${siteConfig.name} — Assisted Career OS for India manufacturing`,
+  title: `${siteConfig.name} — Sovereign Autonomous Career Platform`,
   description: siteConfig.description,
   openGraph: {
     ...defaultMetadata.openGraph,

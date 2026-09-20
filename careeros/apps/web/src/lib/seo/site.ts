@@ -21,11 +21,9 @@ export const siteConfig = {
     "LaTeX Overleaf resume generator",
     "Recruiter cold outreach automation",
     "AI career operating system",
-    "AuraCareer vs Naukri",
-    "OEM Workday jobs India",
-    "Bengaluru SCM jobs",
-    "Pune procurement jobs",
-    "Hyderabad manufacturing jobs",
+    "Tech and Software jobs India",
+    "Product Management careers",
+    "Pan-India and global careers",
   ],
 };
 
