@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "node scripts/vercel-monorepo-links.mjs && npx next build",
+    "build": "next build",
     "start": "npx next start",
     "dev": "npx next dev",
     "lint": "eslint",
