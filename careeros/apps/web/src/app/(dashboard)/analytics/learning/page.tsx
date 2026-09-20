@@ -56,7 +56,7 @@ export default function SelfLearningAnalyticsPage() {
       />
 
       {/* Autonomous Strategy Recommendations Banner */}
-      <Card className="border-primary/30 bg-gradient-to-r from-primary/5 via-purple-500/5 to-transparent">
+      <Card className="border-primary/30 bg-linear-to-r from-primary/5 via-purple-500/5 to-transparent">
         <CardHeader className="pb-2">
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-primary animate-pulse" />

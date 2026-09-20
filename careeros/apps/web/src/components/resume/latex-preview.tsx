@@ -80,7 +80,7 @@ export function LatexPreview({
 
           <Button
             size="sm"
-            className="h-8 text-xs gap-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-sm"
+            className="h-8 text-xs gap-1.5 bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-sm"
             onClick={() => window.open(overleafUrl, "_blank")}
           >
             <Sparkles className="h-3.5 w-3.5" />
@@ -118,7 +118,7 @@ export function LatexPreview({
         )}
 
         {/* Syntax highlight code block */}
-        <div className="relative rounded-lg bg-zinc-950 p-4 font-mono text-xs text-zinc-100 overflow-x-auto max-h-[400px] border border-zinc-800">
+        <div className="relative rounded-lg bg-zinc-950 p-4 font-mono text-xs text-zinc-100 overflow-x-auto max-h-100 border border-zinc-800">
           <pre className="leading-relaxed">
             <code>{latexSource}</code>
           </pre>

@@ -28,7 +28,7 @@ describe("Cross-Portal Deduplication Engine (Invariant 3)", () => {
         signature: computeJobSignature("Swiggy", "Staff Engineer", "Build high scale distributed food delivery systems"),
         company: "Swiggy Pvt Ltd",
         title: "Sr. Staff Engineer",
-        appliedPortal: "greenhouse",
+        appliedPortal: "direct_ats",
         applyUrl: "https://boards.greenhouse.io/swiggy/jobs/123",
         appliedAt: new Date().toISOString(),
         resumeVersion: "v2-ats-latex",
@@ -40,7 +40,7 @@ describe("Cross-Portal Deduplication Engine (Invariant 3)", () => {
     // Same role encountered on LinkedIn
     const check1 = engine.hasAlreadyApplied("Swiggy", "Sr. Staff Engineer");
     expect(check1.isDuplicate).toBe(true);
-    expect(check1.existingRecord?.appliedPortal).toBe("greenhouse");
+    expect(check1.existingRecord?.appliedPortal).toBe("direct_ats");
 
     // Different company
     const check2 = engine.hasAlreadyApplied("Zomato", "Sr. Staff Engineer");

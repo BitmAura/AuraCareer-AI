@@ -101,7 +101,7 @@ export function ActivityTimeline({ events = SAMPLE_ACTIVITY_FEED, maxEvents = 10
         </div>
       </CardHeader>
       <CardContent>
-        <div className="relative pl-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-[2px] before:bg-muted">
+        <div className="relative pl-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-muted">
           <div className="space-y-6">
             {displayEvents.map((event) => {
               const Icon = EVENT_ICON_MAP[event.type] || Sparkles;

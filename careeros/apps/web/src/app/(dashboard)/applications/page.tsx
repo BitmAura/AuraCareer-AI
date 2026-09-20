@@ -162,7 +162,7 @@ export default function ApplicationsPage() {
       {!isLoading && !error && data.length > 0 && (
         <div className="grid gap-4 overflow-x-auto pb-2 md:grid-cols-3 lg:grid-cols-6">
           {byColumn.map((col) => (
-            <Card key={col.id} className="min-w-[200px]">
+            <Card key={col.id} className="min-w-50">
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center justify-between text-sm font-medium">
                   <span>{col.label}</span>

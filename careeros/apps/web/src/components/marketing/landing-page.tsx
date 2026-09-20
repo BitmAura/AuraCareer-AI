@@ -196,7 +196,7 @@ export function LandingPage() {
         )}
       </header>
 
-      <section className="relative isolate min-h-[100svh] overflow-hidden">
+      <section className="relative isolate min-h-svh overflow-hidden">
         <div
           className="absolute inset-0 -z-10"
           aria-hidden
@@ -217,7 +217,7 @@ export function LandingPage() {
           }}
         />
 
-        <div className="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-6 pb-44 pt-28 md:pb-48 md:pt-32">
+        <div className="mx-auto flex min-h-svh max-w-6xl flex-col justify-center px-6 pb-44 pt-28 md:pb-48 md:pt-32">
           <h1 className="mb-5 font-heading text-5xl font-extrabold tracking-tight text-[#12161c] md:text-7xl lg:text-8xl animate-[fadeUp_0.8s_ease_both]">
             CareerOS
           </h1>
@@ -246,7 +246,7 @@ export function LandingPage() {
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[32vh] md:h-[36vh] animate-[riseIn_1.2s_ease_both]"
           aria-hidden
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1a2330] via-[#1a2330]/92 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-[#1a2330] via-[#1a2330]/92 to-transparent" />
           <div className="relative mx-auto flex h-full max-w-6xl items-end px-6 pb-8">
             <div className="grid w-full gap-3 text-[#e8ecef] md:grid-cols-3">
               <div className="border-l-2 border-[#c45c26] pl-4">
@@ -360,7 +360,7 @@ export function LandingPage() {
           </p>
 
           <div className="mt-10 overflow-x-auto rounded-lg border border-[#12161c]/10 bg-white/50">
-            <table className="w-full min-w-[640px] border-collapse text-left text-sm">
+            <table className="w-full min-w-160 border-collapse text-left text-sm">
               <thead>
                 <tr className="border-b border-[#12161c]/10 bg-[#ebe6dc]/80">
                   <th className="px-4 py-3 font-semibold">Capability</th>

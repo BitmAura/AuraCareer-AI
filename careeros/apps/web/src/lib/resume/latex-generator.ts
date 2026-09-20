@@ -1,6 +1,6 @@
 import {
   generateModernAtsLatex,
-  LatexResumeData,
+  type LatexResumeData,
   sanitizeLatex,
 } from "./latex-templates";
 
@@ -143,3 +143,5 @@ export function generateAtsLatexResume(
     suggestedAdditions,
   };
 }
+export { LatexResumeData };
+

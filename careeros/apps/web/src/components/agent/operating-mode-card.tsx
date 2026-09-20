@@ -28,7 +28,7 @@ export function OperatingModeCard() {
   };
 
   return (
-    <Card className="border-border/60 shadow-sm bg-gradient-to-br from-card to-muted/20">
+    <Card className="border-border/60 shadow-sm bg-linear-to-br from-card to-muted/20">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

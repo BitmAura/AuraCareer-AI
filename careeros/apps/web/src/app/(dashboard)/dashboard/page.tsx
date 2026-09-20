@@ -125,7 +125,7 @@ export default function DashboardPage() {
       </div>
 
       {/* 3. Today's Action Focus (High-Yield Daily Rituals) */}
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 via-background to-card shadow-sm">
+      <Card className="border-primary/20 bg-linear-to-br from-primary/5 via-background to-card shadow-sm">
         <div className="p-4 border-b border-border/60 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
