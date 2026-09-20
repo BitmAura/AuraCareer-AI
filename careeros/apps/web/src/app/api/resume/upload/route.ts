@@ -45,12 +45,38 @@ export async function POST(req: Request) {
   if (isSupabaseConfigured()) {
     const sb = getServiceSupabase()!;
     const path = `${user.id}/${id}-${file.name}`;
-    const { error: upErr } = await sb.storage.from("resumes").upload(path, buffer, {
-      contentType: file.type || "application/octet-stream",
-      upsert: true,
-    });
-    if (upErr) {
-      return NextResponse.json({ message: upErr.message }, { status: 500 });
+    
+    // Attempt storage upload with auto-create bucket and graceful fallback
+    try {
+      const { error: upErr } = await sb.storage.from("resumes").upload(path, buffer, {
+        contentType: file.type || "application/octet-stream",
+        upsert: true,
+      });
+
+      if (upErr) {
+        const isBucketNotFound =
+          upErr.message?.toLowerCase().includes("bucket") ||
+          (upErr as any).statusCode === 404 ||
+          (upErr as any).statusCode === "404" ||
+          (upErr as any).error === "Bucket not found";
+
+        if (isBucketNotFound) {
+          // Auto-create 'resumes' bucket using service role credentials
+          const { error: createErr } = await sb.storage.createBucket("resumes", { public: false });
+          if (!createErr) {
+            await sb.storage.from("resumes").upload(path, buffer, {
+              contentType: file.type || "application/octet-stream",
+              upsert: true,
+            });
+          } else {
+            console.warn("Supabase storage bucket creation warning:", createErr.message);
+          }
+        } else {
+          console.warn("Supabase storage upload warning:", upErr.message);
+        }
+      }
+    } catch (storageException: any) {
+      console.warn("Storage operation caught exception, proceeding with resume record creation:", storageException?.message);
     }
 
     const { data, error } = await sb

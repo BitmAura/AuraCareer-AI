@@ -45,6 +45,61 @@ export const UNIVERSAL_ROLE_SUGGESTIONS = [
   "Business Development & Key Account Manager",
 ] as const;
 
+export const PACK_ROLE_SUGGESTIONS: Record<string, string[]> = {
+  software_tech: [
+    "Senior Software Engineer",
+    "Full Stack Developer",
+    "Backend Engineer (Node/Python/Go)",
+    "Frontend Engineer (React/Next.js)",
+    "AI / ML Engineer",
+    "DevOps / Cloud Architect",
+  ],
+  healthcare: [
+    "General Physician / Doctor (MBBS)",
+    "Consultant Specialist / MD",
+    "Staff Nurse / Registered Nurse (RN)",
+    "Clinical Research Associate",
+    "Hospital Operations Manager",
+  ],
+  finance_accounting: [
+    "Chartered Accountant (CA)",
+    "Senior Financial Analyst",
+    "Finance Manager / Controller",
+    "Taxation & Audit Specialist",
+    "Accounts Payable / Receivable Lead",
+  ],
+  marketing_growth: [
+    "Digital Marketing Specialist",
+    "SEO & Content Growth Lead",
+    "Performance Marketing Manager",
+    "Brand & Social Media Strategist",
+    "Product Marketing Manager",
+  ],
+  sales_bizdev: [
+    "Enterprise Account Executive",
+    "Business Development Manager (BDM)",
+    "Sales Director",
+    "Key Account Manager",
+  ],
+  manufacturing_scm: [
+    "Plant Operations Manager",
+    "Quality Assurance (QA/QC) Engineer",
+    "Supply Chain & Procurement Manager",
+    "Production Supervisor",
+    "Maintenance Engineer",
+  ],
+  general: [
+    "Senior Software Engineer",
+    "General Physician / Doctor",
+    "Registered Staff Nurse",
+    "Chartered Accountant (CA)",
+    "Digital Marketing Specialist",
+    "Financial Analyst",
+    "Product Manager",
+    "Operations Manager",
+  ],
+};
+
 export const MANUFACTURING_ROLE_SUGGESTIONS = UNIVERSAL_ROLE_SUGGESTIONS;
 
 export function emptyTargets(): CareerTargets {
