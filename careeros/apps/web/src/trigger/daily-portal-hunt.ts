@@ -1,4 +1,4 @@
-import { task, logger } from "@trigger.dev/sdk/v3";
+import { task, logger } from "@trigger.dev/sdk";
 import { discoverLiveJobs } from "@/lib/jobs/live-discover";
 import { JobDeduplicationEngine, computeJobSignature, normalizeCompanyName, normalizeJobTitle } from "@/lib/jobs/dedup-engine";
 import { localStore } from "@/lib/db/local-store";

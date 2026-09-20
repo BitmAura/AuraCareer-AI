@@ -26,3 +26,5 @@ coverage/
 next-env.d.ts
 uploads/
 *.db
+.trigger
+

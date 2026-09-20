@@ -1,4 +1,4 @@
-import { task, wait, logger } from "@trigger.dev/sdk/v3";
+import { task, wait, logger } from "@trigger.dev/sdk";
 import { generateColdEmailCampaign } from "@/lib/outreach/cold-email-generator";
 import { analyzeRecruiterResponse } from "@/lib/outreach/sentiment-analyzer";
 import { RecruiterContact } from "@/lib/outreach/outreach.types";

@@ -1,11 +1,10 @@
-import { defineConfig } from "@trigger.dev/sdk/v3";
+import { defineConfig } from "@trigger.dev/sdk";
 
 export default defineConfig({
-  project: "proj_auracareer_ai",
+  project: "proj_crwnmeoogeukcezzrnnt",
   runtime: "node",
   logLevel: "log",
-  // The max compute seconds a task is allowed to run. If the task run exceeds this duration, it will be stopped.
-  maxDuration: 1800, // 30 minutes
+  maxDuration: 3600,
   retries: {
     enabledInDev: true,
     default: {
@@ -16,5 +15,5 @@ export default defineConfig({
       randomize: true,
     },
   },
-  dirs: ["src/trigger"],
+  dirs: ["./src/trigger"],
 });
