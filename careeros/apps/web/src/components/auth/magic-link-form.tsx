@@ -21,7 +21,7 @@ export function MagicLinkForm({ next = "/dashboard" }: { next?: string }) {
     e.preventDefault();
     const trimmed = email.trim().toLowerCase();
     if (!trimmed || !trimmed.includes("@")) {
-      setError("Enter a valid work email.");
+      setError("Enter a valid email address.");
       return;
     }
     setLoading(true);
@@ -140,13 +140,13 @@ export function MagicLinkForm({ next = "/dashboard" }: { next?: string }) {
     <form onSubmit={sendLink} className="space-y-3">
       <div className="space-y-1.5">
         <label htmlFor="magic-email" className="text-sm font-medium text-foreground">
-          Work email
+          Email address
         </label>
         <Input
           id="magic-email"
           type="email"
           autoComplete="email"
-          placeholder="you@company.com"
+          placeholder="you@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={loading}

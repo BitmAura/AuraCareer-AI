@@ -31,8 +31,7 @@ function LoginInner() {
           </Link>
           <CardTitle className="text-2xl">Sign in</CardTitle>
           <CardDescription>
-            Private network pilot — India manufacturing (Purchase / SCM / plant). Use email +
-            password if you were given an account, or a magic link if you are new.
+            Sovereign Autonomous Career Platform for ambitious professionals Pan-India and globally. Sign in with email, 6-digit OTP code, or magic link.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
@@ -78,21 +77,14 @@ function LoginInner() {
           )}
 
           <div className="space-y-2 rounded-lg border border-dashed border-border p-3 text-left text-xs text-muted-foreground">
-            <p className="font-medium text-foreground">Share with your network</p>
+            <p className="font-medium text-foreground">Getting started</p>
             <ol className="list-decimal space-y-1 pl-4">
-              <li>If you have a password: sign in with email + password on this page.</li>
-              <li>If you are new: request a magic link / 6-digit code.</li>
-              <li>Complete Profile + Resume, then Confirm-apply from your queue.</li>
+              <li>Enter your email to receive a 6-digit OTP code or instant magic link.</li>
+              <li>Type the code or click the confirmation link to sign in securely.</li>
+              <li>Build your profile, upload your resume, and orchestrate tailored applications.</li>
             </ol>
             <p>
-              Pilot is invite-only and free while we prove value. Paid Concierge target is ₹
-              {buy.conciergeInrMonthly}/mo only after digests + packets work for you —{" "}
-              {buy.refundPromise}
-            </p>
-            <p>
-              Limits: {PRODUCT_STANCE.dailyDigestRunsMax} digests/day,{" "}
-              {PRODUCT_STANCE.dailyQueueCap} Confirm-apply seats/day. You always submit — never silent
-              Easy Apply.
+              Candidate Sovereignty: You always review and submit — never silent auto-apply.
             </p>
           </div>
 

@@ -23,10 +23,9 @@ export default function RegisterPage() {
             <span>AuraCareer</span>
             <span className="text-xs text-primary font-mono px-1 py-0.5 rounded bg-primary/10">AI</span>
           </Link>
-          <CardTitle className="text-2xl">Join the pilot</CardTitle>
+          <CardTitle className="text-2xl">Join AuraCareer AI</CardTitle>
           <CardDescription>
-            New hunters: email a magic link. First visit opens onboarding for your India plant /
-            Purchase / SCM profile.
+            Enter your email to receive your secure sign-in code and kickstart your autonomous career search.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
@@ -45,19 +44,16 @@ export default function RegisterPage() {
             </>
           ) : (
             <p className="text-sm text-muted-foreground">
-              Signup needs Supabase URL and anon key configured.
+               Signup needs Supabase URL and anon key configured.
             </p>
           )}
 
           <div className="space-y-1 rounded-lg border border-dashed border-border p-3 text-xs text-muted-foreground">
-            <p className="font-medium text-foreground">What you get in the pilot</p>
+            <p className="font-medium text-foreground">What you get with AuraCareer AI</p>
             <ul className="list-disc space-y-1 pl-4">
-              <li>OEM / ATS board matches (not US tech spam)</li>
-              <li>Tailored packets you upload yourself</li>
-              <li>
-                Up to {PRODUCT_STANCE.dailyQueueCap} Confirm-apply seats / day — you always click
-                submit
-              </li>
+              <li>Real-time automated portal scanning across top corporate and ATS boards</li>
+              <li>Precision tailored resumes and personalized outreach dossiers</li>
+              <li>Daily curated interview queues with 100% candidate sovereignty</li>
             </ul>
           </div>
 
