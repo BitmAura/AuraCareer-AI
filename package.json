@@ -14,8 +14,13 @@
     "vercel-install": "npm install --prefix careeros/apps/web"
   },
   "dependencies": {
+    "@trigger.dev/sdk": "4.6.3",
     "next": "16.2.12",
     "react": "19.2.4",
     "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@trigger.dev/build": "4.6.3",
+    "typescript": "^5"
   }
 }
