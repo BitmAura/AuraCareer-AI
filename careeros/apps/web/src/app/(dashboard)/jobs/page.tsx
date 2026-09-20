@@ -88,8 +88,8 @@ export default function JobsPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Jobs"
-        description="Company watchlist only — not live vacancies. Apply from Daily queue when a real OEM posting is found, or paste a JD."
+        title="Discovered Jobs"
+        description="Verified positions discovered by your autonomous agent across Greenhouse, Lever, and official ATS portals."
         action={
           <Input
             placeholder="Search jobs..."
@@ -101,12 +101,11 @@ export default function JobsPage() {
       />
 
       <p className="text-sm text-muted-foreground">
-        Prefer the{" "}
-        <Link href="/queue" className="font-medium underline">
-          Daily queue
+        Openings scored and matched against your target profile and resume. Prefer the{" "}
+        <Link href="/queue" className="font-medium underline text-primary">
+          Daily Apply Queue
         </Link>{" "}
-        for graded seats + prepare packet → Confirm apply. Match % below uses your resume + career
-        targets when available.
+        for daily graded seats with tailored packets.
       </p>
 
       {isLoading && <TableSkeleton rows={4} />}
@@ -115,8 +114,8 @@ export default function JobsPage() {
       )}
       {!isLoading && !error && filtered.length === 0 && (
         <EmptyState
-          title="No jobs yet"
-          description="Run Daily queue search to pull real OEM postings with apply URLs. Catalog seeds are hidden."
+          title="No live jobs discovered yet"
+          description="Configure your target role in My Profile, then run your Daily Apply Queue to autonomously poll live Greenhouse, Lever, and verified career portals."
         />
       )}
 

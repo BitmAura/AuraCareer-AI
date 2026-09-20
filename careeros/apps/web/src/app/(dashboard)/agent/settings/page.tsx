@@ -284,35 +284,23 @@ export default function AgentSettingsPage() {
         </Card>
       </div>
 
-      {/* 3. Portal Permissions Matrix */}
-      <Card className="border-border/60">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Globe className="h-5 w-5 text-primary" />
-            <CardTitle className="text-base">Job Portal Permissions Matrix</CardTitle>
+      {/* 3. Global Job Portal Network (Active by Default) */}
+      <Card className="border-border/60 bg-muted/20">
+        <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500">
+              <CheckCircle2 className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-foreground">Global Job Portals &amp; Verified ATS Boards Active</p>
+              <p className="text-[11px] text-muted-foreground">
+                Multi-domain scrapers actively poll Greenhouse, Lever, Ashby, LinkedIn, and direct employer portals by default.
+              </p>
+            </div>
           </div>
-          <CardDescription className="text-xs">
-            Toggle which portals the agent is allowed to search and apply through.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {(Object.keys(kb.portalPermissions) as SupportedPortal[]).map((portalKey) => {
-              const p = kb.portalPermissions[portalKey];
-              return (
-                <div
-                  key={portalKey}
-                  className="flex items-center justify-between p-3 rounded-lg border border-border/50 bg-muted/20"
-                >
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-wider block">{portalKey}</span>
-                    <span className="text-[10px] text-muted-foreground">Cap: {p.dailyCap}/day</span>
-                  </div>
-                  <Switch checked={p.enabled} onCheckedChange={() => handleTogglePortal(portalKey)} />
-                </div>
-              );
-            })}
-          </div>
+          <Badge variant="outline" className="text-[10px] text-emerald-600 border-emerald-500/30 w-fit">
+            All 12+ Networks Enabled
+          </Badge>
         </CardContent>
       </Card>
 

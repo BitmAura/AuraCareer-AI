@@ -85,7 +85,13 @@ export async function GET(req: Request) {
       .not("source_url", "is", null);
     if (error) return NextResponse.json({ message: error.message }, { status: 500 });
     const jobs = (data || [])
-      .filter((j) => Boolean(j.source_url))
+      .filter((j) => {
+        if (!j.source_url) return false;
+        const isLegacySeed =
+          /manual|beachhead|oem_watchlist/i.test(String(j.source || "")) ||
+          String(j.source_kind || "").toLowerCase() === "beachhead";
+        return !isLegacySeed;
+      })
       .map((j) =>
       mapJobWithLiveMatch(
         {
