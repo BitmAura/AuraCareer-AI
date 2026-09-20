@@ -12,5 +12,10 @@
     "lint": "npm run lint --prefix careeros/apps/web",
     "typecheck": "npm exec --prefix careeros/apps/web -- tsc --noEmit",
     "vercel-install": "npm install --prefix careeros/apps/web"
+  },
+  "dependencies": {
+    "next": "16.2.12",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   }
 }
