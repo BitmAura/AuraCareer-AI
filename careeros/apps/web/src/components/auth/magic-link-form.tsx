@@ -92,11 +92,15 @@ export function MagicLinkForm({ next = "/dashboard" }: { next?: string }) {
     return (
       <form onSubmit={verifyCode} className="space-y-3">
         <div className="space-y-2 rounded-lg border border-border bg-muted/40 p-4 text-sm">
-          <p className="font-medium text-foreground">Check your inbox</p>
+          <p className="font-semibold text-foreground">Sign-in link sent!</p>
           <p className="text-muted-foreground">
-            We emailed <span className="font-medium text-foreground">{email.trim()}</span>. Prefer
-            the <strong>6-digit code</strong> if the email shows one — more reliable than the link.
-            If you use the link, click it <strong>once</strong> (email scanners can burn it).
+            We sent an email to <span className="font-medium text-foreground">{email.trim()}</span>.
+          </p>
+          <p className="text-xs text-primary font-medium">
+            Click the &ldquo;Confirm email&rdquo; or &ldquo;Sign in&rdquo; button in your email to log in instantly.
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Or, if your email includes a 6-digit code, enter it below:
           </p>
         </div>
         <div className="space-y-1.5">
