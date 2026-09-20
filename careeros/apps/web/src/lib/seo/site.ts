@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LANDING_FAQS, PUBLIC_NAV } from "@/lib/seo/copy";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://careeros.ai";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aura-career-ai.vercel.app";
 
 export const siteConfig = {
   name: "AuraCareer AI",
@@ -9,9 +9,9 @@ export const siteConfig = {
   url: SITE_URL,
   locale: "en_IN",
   language: "en-IN",
-  tagline: "India's Sovereign Autonomous Career Operating System",
+  tagline: "Autonomous Career Action Platform — Pan-India & Worldwide",
   description:
-    "AuraCareer AI is the autonomous career action platform for candidates — intelligent multi-portal scraping, ATS-ready single-column LaTeX resumes with Overleaf sync, verified recruiter outreach, and human-in-the-loop control.",
+    "AuraCareer AI by BitmAura is the sovereign autonomous career action platform for candidates worldwide — intelligent multi-portal direct ATS discovery, ATS-ready single-column LaTeX resumes with Overleaf sync, verified recruiter outreach, and human-in-the-loop control.",
   keywords: [
     "AuraCareer AI",
     "AuraCareer",
@@ -149,8 +149,8 @@ export function buildLandingJsonLd() {
     ],
     audience: {
       "@type": "Audience",
-      geographicArea: { "@type": "Country", name: "India" },
-      audienceType: "India manufacturing Purchase, procurement, and SCM professionals",
+      geographicArea: { "@type": "AdministrativeArea", name: "Pan-India & Worldwide" },
+      audienceType: "Every ambitious professional across Tech, Engineering, Operations, Product & Business",
     },
     provider: { "@id": `${siteConfig.url}/#organization` },
   };

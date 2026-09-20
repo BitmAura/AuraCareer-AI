@@ -29,7 +29,7 @@ export const LANDING_FAQS = [
 
 export const PUBLIC_NAV = [
   { href: "/how-it-works", label: "How it works" },
-  { href: "/for/purchase-scm", label: "Purchase & SCM" },
+  { href: "/jobs", label: "Explore Roles" },
   { href: "/compare", label: "Compare" },
   { href: "/pricing", label: "Pricing" },
   { href: "/faq", label: "FAQ" },

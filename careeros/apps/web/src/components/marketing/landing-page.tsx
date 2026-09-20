@@ -36,28 +36,28 @@ const pitchProblems = [
 const pitchSolves = [
   {
     title: "One profile & targets",
-    body: "Role, years, cities (Pan-India), CTC — manufacturing pack. The hunt starts from you, not a random feed.",
+    body: "Role (Tech, Software, Product, Operations, Finance, SCM), years, cities (Pan-India & Global), CTC. The hunt starts from you, not a random feed.",
   },
   {
     title: "Resume + ATS-style readiness together",
-    body: "Build, score, and fix gaps in the same place — then reuse versions for real JDs.",
+    body: "Build, score, and fix gaps in the same place — single-column LaTeX format with instant Overleaf sync for real JDs.",
   },
   {
     title: "Graded daily seats — not portal spam",
-    body: `Up to ${PRODUCT_STANCE.dailyDigestRunsMax} searches/day and ${PRODUCT_STANCE.dailyQueueCap} seats with Grade A–F, why, and gaps. Paste Naukri/LinkedIn JDs when portals won’t open.`,
+    body: `Up to ${PRODUCT_STANCE.dailyDigestRunsMax} searches/day and ${PRODUCT_STANCE.dailyQueueCap} seats with Grade A–F, why, and gaps across 13+ portals and verified direct ATS boards.`,
   },
   {
     title: "Packet → Confirm → track",
-    body: "Tailored resume + cover, you Confirm apply, then Kanban the pipeline. No silent Easy Apply bots.",
+    body: "Tailored LaTeX resume + cover letter + recruiter cold email draft. You Confirm every apply. No silent Easy Apply bots.",
   },
 ];
 
 const steps = [
-  { n: "01", title: "Account + targets", body: "Purchase / SCM / plant role, years, Pan-India cities, CTC." },
-  { n: "02", title: "Resume ready", body: "Scorecard + builder so the packet starts from a strong base." },
-  { n: "03", title: "Daily graded seats", body: "OEM + plant seats with why / gaps — not 200 junk links." },
-  { n: "04", title: "Packet + Confirm", body: "See company + apply website. You submit there; then tap I submitted." },
-  { n: "05", title: "Track pipeline", body: "Move each role through applied → interview → offer." },
+  { n: "01", title: "Account + Targets", body: "Tech, Software, SCM, Operations, or Finance role, years, cities (Pan-India & Global), CTC." },
+  { n: "02", title: "Resume Ready", body: "Scorecard + single-column LaTeX builder with Overleaf sync so your packet starts from a strong base." },
+  { n: "03", title: "Daily Graded Seats", body: "Direct ATS (Workday, Greenhouse, Lever, Ashby) + portal seats with why / gaps." },
+  { n: "04", title: "Packet + Confirm", body: "See verified company portal + recruiter contact. You submit with full sovereign control." },
+  { n: "05", title: "Track Pipeline", body: "Move each role through applied → interview → offer with automated follow-ups." },
 ];
 
 type Cell = "yes" | "partial" | "no";
@@ -94,9 +94,9 @@ const pricing = [
     name: "Concierge",
     price: `₹${PRODUCT_STANCE.candidateBuyBar.conciergeInrMonthly.toLocaleString("en-IN")}/mo`,
     note: "Available",
-    blurb: "Founder-reviewed daily pack for India manufacturing hunters. You still Confirm every apply.",
+    blurb: "Founder-reviewed daily pack for ambitious candidates worldwide. You still Confirm every apply.",
     items: [
-      "India OEM Workday + portal seats (JCI/KONE/Shell + Greenhouse)",
+      "Direct ATS Workday + portal seats (Greenhouse, Lever, Ashby, Workday)",
       "Why-match, gaps, apply-assist, STAR, CTC scripts",
       `Up to ${PRODUCT_STANCE.dailyQueueCap} seats/day · you Confirm apply`,
       PRODUCT_STANCE.candidateBuyBar.refundPromise,
@@ -142,7 +142,7 @@ export function LandingPage() {
             href="/"
             className="font-heading text-xl font-bold tracking-tight"
           >
-            CareerOS
+            AuraCareer AI
           </Link>
           {/* Desktop nav */}
           <nav className="hidden items-center gap-8 text-sm text-[#3d4654] md:flex">
@@ -219,17 +219,16 @@ export function LandingPage() {
 
         <div className="mx-auto flex min-h-svh max-w-6xl flex-col justify-center px-6 pb-44 pt-28 md:pb-48 md:pt-32">
           <h1 className="mb-5 font-heading text-5xl font-extrabold tracking-tight text-[#12161c] md:text-7xl lg:text-8xl animate-[fadeUp_0.8s_ease_both]">
-            CareerOS
+            AuraCareer AI
           </h1>
           <p className="mb-3 inline-block rounded-full border border-[#c45c26]/40 bg-[#c45c26]/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#a84c20] animate-[fadeUp_0.75s_ease_both]">
-            India manufacturing only — Purchase, SCM, plant
+            Autonomous Career Action Platform — Pan-India & Worldwide
           </p>
           <p className="max-w-2xl text-2xl font-semibold leading-tight tracking-tight text-[#12161c] md:text-4xl animate-[fadeUp_0.9s_ease_both]">
-            Daily hunt OS for plant, OEM, and procurement roles — not every industry.
+            Daily hunt OS for Tech, Engineering, Operations, Product & Business roles.
           </p>
           <p className="mt-4 max-w-xl text-base text-[#3d4654] md:text-lg animate-[fadeUp_1s_ease_both]">
-            Graded seats from OEM Workday and careers pages, tailored packets, you Confirm apply.
-            Built for India manufacturing hunters. Not IT, banking, campus, or Easy Apply bots.
+            Graded seats from direct company ATS portals (Workday, Greenhouse, Lever, Ashby), single-column LaTeX resumes with Overleaf sync, and direct recruiter cold outreach. Built for every ambitious professional Pan-India and globally.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 animate-[fadeUp_1.1s_ease_both]">
             <Link href="/login" className={cn(buttonVariants({ size: "lg" }), "gap-2")}>
@@ -260,8 +259,8 @@ export function LandingPage() {
                 <p className="text-sm text-white/70">Confirmed seats / day max</p>
               </div>
               <div className="border-l-2 border-white/20 pl-4">
-                <p className="font-heading text-3xl font-bold">OEM + plant</p>
-                <p className="text-sm text-white/70">Manufacturing boards — Pan-India cities</p>
+                <p className="font-heading text-3xl font-bold">Pan-India & Global</p>
+                <p className="text-sm text-white/70">Direct ATS & Verified Portals Worldwide</p>
               </div>
             </div>
           </div>
@@ -274,7 +273,7 @@ export function LandingPage() {
             How it works
           </h2>
           <p className="mt-2 max-w-xl text-[#3d4654]">
-            One roof for the India manufacturing hunt — not five tabs and an Easy Apply gun.
+            One autonomous roof for your career hunt across 13+ portals — not twenty tabs and blind Easy Apply bots.
           </p>
           <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             {steps.map((s) => (
@@ -298,8 +297,8 @@ export function LandingPage() {
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/65">
             For a resume, people open a builder. For ATS, another site. For jobs, every portal —
-            Naukri, LinkedIn, company pages — and still wonder what’s real. CareerOS puts the
-            genuine loop in one place: ready resume, graded seats, apply packet, Confirm, track.
+            Naukri, LinkedIn, company pages — and still wonder what’s real. AuraCareer AI puts the
+            genuine loop in one place: ready LaTeX resume, graded seats, apply packet, direct recruiter outreach, and pipeline tracking.
           </p>
 
           <div className="mt-14 grid gap-10 lg:grid-cols-2">
@@ -319,7 +318,7 @@ export function LandingPage() {
             </div>
             <div>
               <h3 className="font-heading text-lg font-bold text-white">
-                What CareerOS does instead
+                What AuraCareer AI does instead
               </h3>
               <ul className="mt-6 space-y-6">
                 {pitchSolves.map((s) => (
@@ -336,7 +335,7 @@ export function LandingPage() {
                   "mt-10 inline-flex gap-2 bg-[#c45c26] text-white hover:bg-[#a84c20]",
                 )}
               >
-                Start on CareerOS
+                Start on AuraCareer AI
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -352,11 +351,11 @@ export function LandingPage() {
       <section className="bg-[#f3f1ec] px-6 py-20" id="compare">
         <div className="mx-auto max-w-6xl">
           <h2 className="font-heading text-3xl font-bold md:text-4xl">
-            CareerOS vs Naukri, LinkedIn bots &amp; resume builders
+            AuraCareer AI vs Naukri, LinkedIn bots &amp; resume builders
           </h2>
           <p className="mt-2 max-w-2xl text-[#3d4654]">
             Naukri wins on portal listings. LinkedIn bots win on volume. Resume builders win on
-            PDFs. CareerOS wins on a daily, explained apply system you control.
+            PDFs. AuraCareer AI wins on a daily, explained apply system you control.
           </p>
 
           <div className="mt-10 overflow-x-auto rounded-lg border border-[#12161c]/10 bg-white/50">
@@ -364,7 +363,7 @@ export function LandingPage() {
               <thead>
                 <tr className="border-b border-[#12161c]/10 bg-[#ebe6dc]/80">
                   <th className="px-4 py-3 font-semibold">Capability</th>
-                  <th className="px-3 py-3 text-center font-semibold text-[#c45c26]">CareerOS</th>
+                  <th className="px-3 py-3 text-center font-semibold text-[#c45c26]">AuraCareer AI</th>
                   <th className="px-3 py-3 text-center font-medium text-[#3d4654]">Naukri Premium</th>
                   <th className="px-3 py-3 text-center font-medium text-[#3d4654]">LI auto-apply</th>
                   <th className="px-3 py-3 text-center font-medium text-[#3d4654]">Resume builders</th>
@@ -392,7 +391,7 @@ export function LandingPage() {
             </table>
           </div>
           <p className="mt-3 text-xs text-[#3d4654]">
-            ✓ = strong · − = partial · ✕ = missing. Naukri still wins raw portal inventory; CareerOS
+            ✓ = strong · − = partial · ✕ = missing. Naukri still wins raw portal inventory; AuraCareer AI
             wins the apply operating system.
           </p>
         </div>
@@ -460,7 +459,7 @@ export function LandingPage() {
             Frequently asked questions
           </h2>
           <p className="mt-2 text-[#3d4654]">
-            Straight answers for candidates comparing CareerOS with Naukri, LinkedIn, and resume tools.
+            Straight answers for candidates comparing AuraCareer AI with Naukri, LinkedIn, and resume tools.
           </p>
           <dl className="mt-10 space-y-8">
             {faqs.map((item) => (
@@ -484,10 +483,10 @@ export function LandingPage() {
         />
         <div className="relative mx-auto max-w-2xl">
           <p className="font-heading text-4xl font-bold md:text-5xl">
-            CareerOS
+            AuraCareer AI
           </p>
           <p className="mt-4 text-white/70">
-            Next plant / procurement role shouldn’t depend on Easy Apply. Run the manufacturing OS.
+            Your next senior role shouldn’t depend on blind Easy Apply spam. Run the sovereign career OS.
           </p>
           <Link
             href="/login"
@@ -506,10 +505,10 @@ export function LandingPage() {
         <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
           <div>
             <p className="font-heading font-bold text-[#12161c]">
-              CareerOS AI
+              AuraCareer AI
             </p>
             <p className="mt-2 max-w-xs">
-              Assisted Career OS for India manufacturing only — Purchase, SCM, plant. Pan-India.
+              Sovereign Autonomous Career Operating System by BitmAura — Pan-India & Worldwide.
             </p>
           </div>
           <div>
