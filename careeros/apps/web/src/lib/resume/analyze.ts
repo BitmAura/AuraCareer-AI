@@ -376,7 +376,7 @@ function buildImprovedMarkdown(rawText: string, analysis: AnalysisResult): strin
 }
 
 async function geminiAnalyze(rawText: string): Promise<AnalysisResult | null> {
-  const prompt = `You are CareerOS AI resume coach for Indian manufacturing professionals (procurement, supply chain, production, quality, maintenance).
+  const prompt = `You are AuraCareer AI resume intelligence coach for ambitious professionals.
 
 Analyze this resume text and return ONLY valid JSON with this shape:
 {

@@ -150,7 +150,7 @@ export default function DailyQueuePage() {
         } else if (!url) {
           toast.success("Logged as Opened — no URL; apply on the company site, then confirm submit");
         } else {
-          toast.message("Login-wall boards are not opened by CareerOS — paste the JD or apply on the employer site.");
+          toast.message("Login-wall boards are not opened by AuraCareer AI — paste the JD or apply on the employer site.");
         }
         queryClient.invalidateQueries({ queryKey: ["applications"] });
         queryClient.invalidateQueries({ queryKey: ["hunt-today"] });
@@ -288,7 +288,7 @@ export default function DailyQueuePage() {
       } else {
         const a = document.createElement("a");
         a.href = url;
-        a.download = `careeros-packet.${format}`;
+        a.download = `auracareer-packet.${format}`;
         a.click();
         toast.success("PDF downloaded (text ATS packet)");
       }
@@ -380,9 +380,48 @@ export default function DailyQueuePage() {
       </div>
 
       <p className="text-sm text-muted-foreground">
-        OEM Workday + Greenhouse first. LinkedIn/Naukri are never scraped — paste the JD instead.
-        Daily queue only shows live postings or JDs you paste — not invented company titles.
+        OEM Workday + Greenhouse first (JCI, KONE, Shell, Flowserve, Philips, Fictiv, Xometry).
+        Ballari plants like JSW / Janki usually hire via their own careers page, walk-in forms, or
+        resume email — not those ATS feeds — so paste that JD/URL here. LinkedIn/Naukri are never
+        scraped.
       </p>
+
+      {targetsInfo?.targets?.cities?.some((c) =>
+        /ballari|bellary|toranagallu|vijayanagar|hosapet|hospet|koppal/i.test(c),
+      ) && (
+        <div className="rounded-lg border border-border bg-muted/30 px-4 py-3 text-sm space-y-2">
+          <p className="font-medium text-foreground">Ballari plant belt — how hiring actually works</p>
+          <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
+            <li>
+              <a
+                className="underline"
+                href="https://www.jsw.in/careers/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                JSW Vijayanagar
+              </a>{" "}
+              — careers site / walk-ins (no public Workday API)
+            </li>
+            <li>
+              <a
+                className="underline"
+                href="https://www.jankicorp.com/careers/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Janki Corp
+              </a>{" "}
+              — share resume on careers page
+            </li>
+            <li>Minera / nearby Koppal steel — often email or LinkedIn; paste the posting into queue</li>
+          </ul>
+          <p className="text-xs text-muted-foreground">
+            Daily search still runs pan-India OEMs. For local plant seats: open the link → copy JD or
+            apply URL → Paste below.
+          </p>
+        </div>
+      )}
 
       {targetsInfo && !targetsInfo.ready && (
         <div className="rounded-lg border border-amber-500/40 bg-amber-500/5 px-4 py-3 text-sm">
@@ -595,7 +634,7 @@ export default function DailyQueuePage() {
                       </p>
                     ) : null}
                     <ol className="list-decimal space-y-1 pl-4 text-xs text-muted-foreground">
-                      <li>Prepare packet (tailored resume + cover) in CareerOS.</li>
+                      <li>Prepare packet (tailored resume + cover) in AuraCareer AI.</li>
                       <li>Open the website above — that is the employer form, not Naukri Easy Apply.</li>
                       <li>Upload the packet and submit on their site.</li>
                       <li>Come back here and tap “I submitted” so Applications tracks it.</li>
@@ -641,7 +680,7 @@ export default function DailyQueuePage() {
                       ) : null}
                       {preview.job?.discoveredAt && (
                         <span>
-                          Found by CareerOS:{" "}
+                          Found by AuraCareer AI:{" "}
                           {new Date(preview.job.discoveredAt).toLocaleDateString()}
                         </span>
                       )}
@@ -817,7 +856,7 @@ export default function DailyQueuePage() {
           ) : (
             <EmptyState
               title="Select a match"
-              description="Click a result. You will see company + the exact website. Packet → open that site → you submit → tap I submitted. CareerOS never auto-applies."
+              description="Click a result. You will see company + the exact website. Packet → open that site → you submit → tap I submitted. AuraCareer AI keeps you in sovereign control."
             />
           )}
 

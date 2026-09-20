@@ -40,9 +40,11 @@ export function boardsForRoleFamily(family: string): PortalBoard[] {
       ? ["sales", "ops"]
       : family === "procurement"
         ? ["supply", "ops", "manufacturing"]
-        : family === "plant_ops"
+        : family === "plant_ops" || family === "trades"
           ? ["manufacturing", "plant", "ops"]
-          : ["manufacturing", "ops", "sales", "supply"];
+          : family === "hr_admin" || family === "it_mfg"
+            ? ["ops", "manufacturing"]
+            : ["manufacturing", "ops", "sales", "supply"];
 
   return [...INDIA_MANUFACTURING_PORTAL_BOARDS]
     .filter((b) => b.indiaHiring)

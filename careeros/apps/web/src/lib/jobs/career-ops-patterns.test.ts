@@ -6,9 +6,9 @@ import { buildPacketHtml, buildSimpleTextPdf } from "@/lib/resume/packet-pdf";
 import { detectKnockOuts, buildNegotiationScript } from "@/lib/career/win-kit";
 import { PRODUCT_STANCE } from "@/lib/product/stance";
 
-describe("CareerOS naming", () => {
-  it("keeps CareerOS brand and never brands as career-ops", () => {
-    expect(PRODUCT_STANCE.brandName).toBe("CareerOS");
+describe("AuraCareer AI naming", () => {
+  it("keeps AuraCareer AI brand and never brands as career-ops", () => {
+    expect(PRODUCT_STANCE.brandName).toBe("AuraCareer AI");
     expect(PRODUCT_STANCE.brandName.toLowerCase()).not.toBe("career-ops");
     expect(PRODUCT_STANCE.portalScanFirst).toBe(true);
     expect(PRODUCT_STANCE.assistedApplyOnly).toBe(true);

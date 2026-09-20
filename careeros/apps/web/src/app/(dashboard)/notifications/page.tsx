@@ -23,7 +23,7 @@ export default function NotificationsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Notifications"
-        description="Follow-ups from your hunt loop — CareerOS never emails recruiters for you."
+        description="Follow-ups from your hunt loop — AuraCareer AI keeps you in sovereign control."
       />
       {followUps.length === 0 ? (
         <p className="text-sm text-muted-foreground">

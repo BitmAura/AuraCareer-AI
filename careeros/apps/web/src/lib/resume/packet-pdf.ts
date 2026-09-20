@@ -74,7 +74,7 @@ export function buildPacketHtml(opts: {
   coverLetter?: string;
   brandName?: string;
 }): string {
-  const brand = opts.brandName || "CareerOS";
+  const brand = opts.brandName || "AuraCareer AI";
   const resumeHtml = markdownToSimpleHtml(opts.resumeMarkdown || "");
   const coverHtml = opts.coverLetter
     ? `<section class="cover"><h1>Cover letter — ${escapeHtml(opts.company)}</h1>${markdownToSimpleHtml(opts.coverLetter)}</section>`
@@ -108,7 +108,7 @@ export function buildPacketHtml(opts: {
 }
 
 /** Minimal single-page text PDF (no external deps). */
-export function buildSimpleTextPdf(text: string, title = "CareerOS Packet"): Uint8Array {
+export function buildSimpleTextPdf(text: string, title = "AuraCareer Packet"): Uint8Array {
   const safe = text
     .replace(/\r\n/g, "\n")
     .split("\n")

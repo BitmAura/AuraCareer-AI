@@ -6,13 +6,14 @@ from dotenv import load_dotenv
 
 from .scrapers.oem_scrapers import scrape_all_oem_jobs
 from .scrapers.ats_workday import fetch_all_ats_jobs
+from .scrapers.multi_portal_scraper import scrape_multi_portal_jobs, SUPPORTED_PORTALS
 
 load_dotenv()
 
 app = FastAPI(
-    title="CareerOS Job Scraper",
-    description="Production job scraper worker for Indian manufacturing, SCM, and operations roles.",
-    version="1.0.0"
+    title="CareerOS Job Scraper & Multi-Portal Ingestion",
+    description="Autonomous job scraper worker for Indian & global tech, engineering, and operations roles.",
+    version="2.0.0"
 )
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
@@ -22,6 +23,7 @@ class ScrapeRequest(BaseModel):
     source: Optional[str] = "all"
     query: Optional[str] = None
     location: Optional[str] = None
+    portals: Optional[List[str]] = None
     limit: int = 50
 
 class ScrapeResponse(BaseModel):
@@ -34,27 +36,32 @@ async def health():
     return {
         "status": "ok",
         "service": "job-scraper",
-        "version": "1.0.0",
-        "supported_sources": ["oem", "ats_workday", "greenhouse", "tata", "bosch", "siemens"]
+        "version": "2.0.0",
+        "supported_portals": SUPPORTED_PORTALS
     }
 
 @app.post("/scrape", response_model=ScrapeResponse)
 async def scrape_jobs(request: ScrapeRequest):
     all_jobs: List[Dict[str, Any]] = []
     
-    # 1. Fetch OEM jobs (Tata, Bosch, Siemens, JSW, Cummins, Schneider)
-    oem_jobs = scrape_all_oem_jobs(query=request.query, location=request.location, limit=request.limit)
-    all_jobs.extend(oem_jobs)
-    
-    # 2. Fetch ATS jobs (Greenhouse, Workday)
+    # 1. Fetch Multi-Portal verified jobs (LinkedIn, Naukri, Indeed, Glassdoor, Cutshort, Instahyre, etc.)
+    multi_jobs = scrape_multi_portal_jobs(query=request.query, location=request.location, portals=request.portals, limit=request.limit)
+    all_jobs.extend(multi_jobs)
+
+    # 2. Fetch direct ATS jobs (Greenhouse, Workday)
     ats_jobs = fetch_all_ats_jobs(query=request.query, location=request.location, limit=request.limit)
     all_jobs.extend(ats_jobs)
     
     return ScrapeResponse(
-        source=request.source or "all",
+        source=request.source or "multi_portal_all",
         jobs_scraped=len(all_jobs[:request.limit]),
         jobs=all_jobs[:request.limit]
     )
+
+@app.post("/scrape/multi-portal", response_model=ScrapeResponse)
+async def scrape_multi_portal(request: ScrapeRequest):
+    jobs = scrape_multi_portal_jobs(query=request.query, location=request.location, portals=request.portals, limit=request.limit)
+    return ScrapeResponse(source="multi_portal", jobs_scraped=len(jobs), jobs=jobs)
 
 @app.post("/scrape/oem", response_model=ScrapeResponse)
 async def scrape_oem(request: ScrapeRequest):

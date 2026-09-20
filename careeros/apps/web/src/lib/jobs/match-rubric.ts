@@ -61,6 +61,46 @@ const MANUFACTURING_PLANT = [
   "factory",
 ];
 
+const MANUFACTURING_TRADES = [
+  "iti",
+  "diploma",
+  "hvac",
+  "technician",
+  "electrician",
+  "fitter",
+  "welder",
+  "operator",
+  "jcb",
+  "driver",
+  "lorry",
+  "crane",
+  "mechanic",
+  "refrigeration",
+];
+
+const MANUFACTURING_HR_ADMIN = [
+  "hr",
+  "recruitment",
+  "payroll",
+  "admin",
+  "office",
+  "talent",
+  "human",
+  "resources",
+];
+
+const MANUFACTURING_IT = [
+  "support",
+  "network",
+  "helpdesk",
+  "sap",
+  "scada",
+  "mes",
+  "system",
+  "infra",
+  "desktop",
+];
+
 const HEALTHCARE = [
   "clinical",
   "hospital",
@@ -123,8 +163,16 @@ function domainLexicon(targets: CareerTargets | null | undefined) {
   if (family === "healthcare") return HEALTHCARE;
   if (family === "sales") return [...MANUFACTURING_SALES, "manufacturing"];
   if (family === "plant_ops") return MANUFACTURING_PLANT;
+  if (family === "trades") return [...MANUFACTURING_TRADES, "plant", "manufacturing"];
+  if (family === "hr_admin") return [...MANUFACTURING_HR_ADMIN, "plant", "manufacturing"];
+  if (family === "it_mfg") return [...MANUFACTURING_IT, "plant", "manufacturing"];
   if (family === "procurement") return [...MANUFACTURING_PROCUREMENT, "plant", "manufacturing"];
-  return [...MANUFACTURING_PROCUREMENT, ...MANUFACTURING_SALES, ...MANUFACTURING_PLANT].slice(0, 24);
+  return [
+    ...MANUFACTURING_PROCUREMENT,
+    ...MANUFACTURING_SALES,
+    ...MANUFACTURING_PLANT,
+    ...MANUFACTURING_TRADES,
+  ].slice(0, 28);
 }
 
 export function evaluateJobMatch(
@@ -340,11 +388,18 @@ export function evaluateJobMatch(
 export function seniorityClash(jobTitle: string, targets?: CareerTargets | null): boolean {
   const want = `${targets?.targetRole || ""}`.toLowerCase();
   const title = jobTitle.toLowerCase();
+  const years = targets?.yearsExperience ?? 0;
   const juniorWant =
-    /get|trainee|intern|fresher|graduate engineer|campus/.test(want) ||
-    (targets?.yearsExperience != null && targets.yearsExperience <= 1);
+    /get|trainee|intern|fresher|graduate engineer|campus|\biti\b|diploma|technician|helper|operator|driver|apprentice/.test(
+      want,
+    ) || years <= 1;
   const seniorJob = /\b(manager|director|head|lead|principal|vp|chief)\b/.test(title);
-  return juniorWant && seniorJob;
+  const seniorWant =
+    /\b(manager|director|head|lead|principal|vp|chief)\b/.test(want) && years >= 5;
+  const juniorJob =
+    /\b(technician|helper|operator|driver|trainee|intern|apprentice|iti)\b/.test(title) &&
+    !/\b(manager|lead|head)\b/.test(title);
+  return (juniorWant && seniorJob) || (seniorWant && juniorJob);
 }
 
 /** Hard admission check before seating a job in digest. */

@@ -42,7 +42,7 @@ export default function InterviewsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Interviews"
-        description="Log real interviews from confirmed submits. This is how CareerOS proves conversion — not vanity queue counts."
+        description="Log real interviews from confirmed submits. This is how AuraCareer AI proves conversion — not vanity queue counts."
         action={
           <Button variant="outline" render={<Link href="/applications" />}>
             Open tracker

@@ -42,6 +42,9 @@ export const VERIFIED_MANUFACTURING_SOURCES: RegisteredSource[] = [
   { host: "shell.wd3.myworkdayjobs.com", publisher: "Shell", platform: "Workday", type: "company_ats" },
   { host: "flowserve.wd1.myworkdayjobs.com", publisher: "Flowserve", platform: "Workday", type: "company_ats" },
   { host: "philips.wd3.myworkdayjobs.com", publisher: "Philips", platform: "Workday", type: "company_ats" },
+  { host: "jsw.in", publisher: "JSW Group", platform: "JSW Careers", type: "company_careers" },
+  { host: "jswsteel.in", publisher: "JSW Steel", platform: "JSW Steel Careers", type: "company_careers" },
+  { host: "jankicorp.com", publisher: "Janki Corp", platform: "Janki Careers", type: "company_careers" },
   { host: "bosch.in", publisher: "Bosch India", platform: "Bosch Careers", type: "company_careers" },
   { host: "tatasteelindia.com", publisher: "Tata Steel", platform: "Tata Steel Careers", type: "company_careers" },
   { host: "tatasteel.co.in", publisher: "Tata Steel", platform: "Tata Steel Recruitment", type: "company_careers" },
@@ -168,7 +171,13 @@ export function manufacturingSourceSearchClauses(
   const publicSector =
     "(site:careers.bhel.in OR site:sailcareers.com OR site:gailonline.com/careers)";
 
-  if (family === "plant_ops" || family === "procurement") {
+  if (
+    family === "plant_ops" ||
+    family === "procurement" ||
+    family === "trades" ||
+    family === "hr_admin" ||
+    family === "it_mfg"
+  ) {
     return [enterprise, enterpriseAts, publicSector];
   }
   return [enterprise, enterpriseAts];

@@ -13,7 +13,7 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Settings" description="Account for this CareerOS workspace." />
+      <PageHeader title="Settings" description="Account for this AuraCareer AI workspace." />
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Account</CardTitle>

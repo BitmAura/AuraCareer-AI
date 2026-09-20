@@ -8,9 +8,9 @@
  * under our own product name.
  */
 export const PRODUCT_STANCE = {
-  /** Public product name — never rename to career-ops. */
-  brandName: "CareerOS",
-  brandTagline: "Assisted Career OS for India manufacturing",
+  /** Public product name — AuraCareer AI by BitmAura. */
+  brandName: "AuraCareer AI",
+  brandTagline: "Sovereign Autonomous Career Operating System",
   /** Max discovery runs per calendar day (UTC date key). */
   dailyDigestRunsMax: 3,
   /** Max assisted-apply seats in the review queue per day (confirmed applies, not silent bots). */

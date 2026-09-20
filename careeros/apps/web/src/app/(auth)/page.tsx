@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Auth - CareerOS AI",
+  title: "Auth - AuraCareer AI",
 };
 
 export default function AuthRootPage() {

@@ -62,9 +62,13 @@ export function oemBoardsForFamily(family: string): WorkdayOemBoard[] {
       ? ["sales", "ops"]
       : family === "procurement"
         ? ["procurement", "supply", "ops"]
-        : family === "plant_ops"
+        : family === "plant_ops" || family === "trades"
           ? ["plant", "manufacturing", "ops"]
-          : ["manufacturing", "ops", "sales", "supply", "procurement"];
+          : family === "hr_admin"
+            ? ["ops", "manufacturing"]
+            : family === "it_mfg"
+              ? ["ops", "manufacturing", "plant"]
+              : ["manufacturing", "ops", "sales", "supply", "procurement"];
 
   return [...INDIA_OEM_WORKDAY_BOARDS].sort((a, b) => {
     const as = a.tags.some((t) => prefer.includes(t)) ? 0 : 1;

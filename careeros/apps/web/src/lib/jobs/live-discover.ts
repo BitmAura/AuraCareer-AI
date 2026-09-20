@@ -27,6 +27,10 @@ import {
   packKeywordsForTargets,
   roleFamiliesCompatible,
 } from "@/lib/product/targets";
+import {
+  ballariPlantSearchClause,
+  profileTargetsBallariBelt,
+} from "@/lib/jobs/ballari-plants";
 
 const BLOCKED_HOST_PARTS = [
   "linkedin.com",
@@ -116,9 +120,15 @@ export function buildDigestSearchQueries(
       ? "Regional Sales Manager OR Key Account Manager manufacturing"
       : family === "plant_ops"
         ? "Production Manager OR Plant Manager manufacturing"
-        : family === "healthcare"
-          ? "Clinical OR Hospital Consultant"
-          : "Procurement Manager OR Purchase Manager OR Supply Chain Manager");
+        : family === "trades"
+          ? "HVAC Technician OR ITI Electrician OR Plant Operator manufacturing"
+          : family === "hr_admin"
+            ? "HR Executive OR Admin Officer manufacturing plant"
+            : family === "it_mfg"
+              ? "IT Support OR System Admin manufacturing plant"
+              : family === "healthcare"
+                ? "Clinical OR Hospital Consultant"
+                : "Procurement Manager OR Purchase Manager OR Supply Chain Manager");
 
   const pack = packKeywordsForTargets(targets);
   const years =
@@ -163,6 +173,15 @@ export function buildDigestSearchQueries(
     );
   } else if (noticeBits) {
     queries.push(`${role} ${noticeBits} India careers -naukri -linkedin`.replace(/\s+/g, " ").trim());
+  }
+
+  // Ballari belt: JSW / Janki / Minera do not expose Workday APIs — name-search + paste.
+  if (profileTargetsBallariBelt(targets?.cities, targets?.targetRole)) {
+    queries.unshift(
+      `${role} ${ballariPlantSearchClause()} careers OR hiring OR walk-in -naukri`
+        .replace(/\s+/g, " ")
+        .trim(),
+    );
   }
 
   return [...new Set(queries)].slice(0, 4);

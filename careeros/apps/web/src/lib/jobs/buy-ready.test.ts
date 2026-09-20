@@ -102,6 +102,17 @@ describe("profile-driven queries", () => {
     })).toBe("sales");
     expect(q.join(" ")).toMatch(/jobs\.siemens\.com|careers\.se\.com/);
   });
+
+  it("adds Ballari plant name search when cities include Ballari", () => {
+    const q = buildDigestSearchQueries({
+      targetRole: "Purchase Executive",
+      yearsExperience: 5,
+      cities: ["Ballari", "Karnataka"],
+      industryPack: "manufacturing_scm",
+      openToRelocate: true,
+    });
+    expect(q.join(" ")).toMatch(/JSW Vijayanagar|Janki Corp/);
+  });
 });
 
 describe("manufacturing source attribution", () => {
@@ -216,6 +227,42 @@ describe("location + family admission", () => {
     expect(roleFamiliesCompatible("sales", "procurement")).toBe(false);
     expect(roleFamiliesCompatible("sales", "sales")).toBe(true);
     expect(roleFamiliesCompatible("general", "sales")).toBe(true);
+    expect(roleFamiliesCompatible("trades", "plant_ops")).toBe(true);
+    expect(roleFamiliesCompatible("hr_admin", "sales")).toBe(false);
+  });
+
+  it("classifies manufacturing workforce roles", async () => {
+    const { inferRoleFamily, inferRoleFamilyFromText } = await import("@/lib/product/targets");
+    expect(inferRoleFamilyFromText("HVAC Technician")).toBe("trades");
+    expect(inferRoleFamilyFromText("ITI Electrician")).toBe("trades");
+    expect(inferRoleFamilyFromText("JCB Operator")).toBe("trades");
+    expect(inferRoleFamilyFromText("Lorry Driver")).toBe("trades");
+    expect(inferRoleFamilyFromText("HR Executive Plant")).toBe("hr_admin");
+    expect(inferRoleFamilyFromText("Admin Office Assistant")).toBe("hr_admin");
+    expect(inferRoleFamilyFromText("IT Support Manufacturing")).toBe("it_mfg");
+    expect(inferRoleFamilyFromText("Purchase Executive")).toBe("procurement");
+    expect(inferRoleFamilyFromText("Sales Executive Manufacturing")).toBe("sales");
+    expect(
+      inferRoleFamily({
+        targetRole: "AC Technician",
+        yearsExperience: 3,
+        cities: ["Ballari"],
+        industryPack: "manufacturing_scm",
+      }),
+    ).toBe("trades");
+  });
+
+  it("admits Ballari as India-relevant location", async () => {
+    const { indiaRelevantLocation } = await import("@/lib/jobs/portal-filters");
+    expect(
+      indiaRelevantLocation("Ballari, Karnataka, India", {
+        targetRole: "HVAC Technician",
+        yearsExperience: 2,
+        cities: ["Ballari"],
+        industryPack: "manufacturing_scm",
+        openToRelocate: true,
+      }),
+    ).toBe(true);
   });
 });
 

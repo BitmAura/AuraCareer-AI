@@ -20,7 +20,7 @@ async function loadPacketSource(userId: string, id: string) {
     return {
       tailoredMarkdown: row.tailored_markdown ? String(row.tailored_markdown) : undefined,
       coverLetter: row.cover_letter ? String(row.cover_letter) : undefined,
-      title: row.jobs?.title ? String(row.jobs.title) : "CareerOS packet",
+      title: row.jobs?.title ? String(row.jobs.title) : "AuraCareer packet",
       company: row.jobs?.company ? String(row.jobs.company) : "Employer",
     };
   }
@@ -30,7 +30,7 @@ async function loadPacketSource(userId: string, id: string) {
   return {
     tailoredMarkdown: item.tailoredMarkdown,
     coverLetter: item.coverLetter,
-    title: item.job?.title || "CareerOS packet",
+    title: item.job?.title || "AuraCareer packet",
     company: item.job?.company || "Employer",
   };
 }
@@ -57,7 +57,7 @@ export async function GET(req: Request, ctx: Ctx) {
     return new NextResponse(Buffer.from(bytes), {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="careeros-packet-${id.slice(0, 8)}.pdf"`,
+        "Content-Disposition": `attachment; filename="auracareer-packet-${id.slice(0, 8)}.pdf"`,
       },
     });
   }
@@ -72,7 +72,7 @@ export async function GET(req: Request, ctx: Ctx) {
   return new NextResponse(html, {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
-      "Content-Disposition": `inline; filename="careeros-packet-${id.slice(0, 8)}.html"`,
+      "Content-Disposition": `inline; filename="auracareer-packet-${id.slice(0, 8)}.html"`,
     },
   });
 }

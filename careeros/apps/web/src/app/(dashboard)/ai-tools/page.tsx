@@ -5,9 +5,30 @@ import { PageHeader } from "@/components/shared/page-header/PageHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PRODUCT_STANCE } from "@/lib/product/stance";
-import { Sparkles, FileText, Mail, MessageSquare, Handshake, ListChecks } from "lucide-react";
+import { Sparkles, FileText, Mail, MessageSquare, Handshake, ListChecks, FileCode, Users, Shield } from "lucide-react";
 
 const aiTools = [
+  {
+    title: "Overleaf & LaTeX Synthesizer",
+    description: "Compile-ready ATS LaTeX resume with 1-click Overleaf cloud import and JD alignment",
+    icon: FileCode,
+    href: "/resume",
+    cta: "Synthesize LaTeX",
+  },
+  {
+    title: "Recruiter Cold Outreach",
+    description: "Discovers HR contacts, drafts human-grade cold emails with LaTeX resume, tracks replies",
+    icon: Mail,
+    href: "/outreach",
+    cta: "Launch Outreach Hub",
+  },
+  {
+    title: "Autonomous Agent Control",
+    description: "Operating mode switcher (Autonomous / Approval / Assisted), portal permissions, daily caps",
+    icon: Shield,
+    href: "/agent/settings",
+    cta: "Configure Agent Rules",
+  },
   {
     title: "Resume Optimizer",
     description: "ATS-style scorecard (not employer ATS), keyword gap, improved regenerate",
@@ -46,7 +67,7 @@ const aiTools = [
   },
   {
     title: "LinkedIn outreach draft",
-    description: "≤300-char hiring-manager note — CareerOS never sends messages",
+    description: "≤300-char hiring-manager note — AuraCareer AI keeps you in sovereign control",
     icon: MessageSquare,
     href: "/queue",
     cta: "Draft from queue",

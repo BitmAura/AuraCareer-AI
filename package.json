@@ -1,7 +1,7 @@
 {
-  "name": "carrer-os-ai",
+  "name": "auracareer-ai",
   "private": true,
-  "description": "Workspace root — app lives in careeros/. Run npm run dev from here.",
+  "description": "Workspace root for AuraCareer AI by BitmAura. Run npm run dev from here.",
   "scripts": {
     "dev": "npm run dev --prefix careeros/apps/web",
     "dev:web": "npm run dev --prefix careeros/apps/web",

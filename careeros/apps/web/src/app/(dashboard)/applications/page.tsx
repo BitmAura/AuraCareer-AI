@@ -101,7 +101,7 @@ export default function ApplicationsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Applications"
-        description="Opened = careers site visited. Applied = you confirmed you submitted on the employer site. CareerOS never auto-submits."
+        description="Opened = careers site visited. Applied = you confirmed you submitted on the employer site. AuraCareer AI keeps you in sovereign control."
         action={
           <Button variant="outline" render={<Link href="/queue" />}>
             Open daily queue

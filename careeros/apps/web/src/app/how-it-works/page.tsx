@@ -2,17 +2,17 @@ import { MarketingShell } from "@/components/marketing/marketing-shell";
 import { pageMetadata } from "@/lib/seo/site";
 
 export const metadata = pageMetadata({
-  title: "How CareerOS works",
+  title: "How AuraCareer AI works",
   description:
-    "CareerOS daily loop for India: targets, resume, graded OEM seats, packet, you Confirm apply. Pan-India manufacturing Purchase & SCM.",
+    "AuraCareer AI daily loop: targets, resume, multi-portal discovery, packet, and confirmed applications with recruiter outreach.",
   path: "/how-it-works",
 });
 
 const steps = [
-  ["Account + targets", "Role, years, cities (Pan-India), CTC, notice, manufacturing pack."],
-  ["Resume ready", "Scorecard + builder so packets start from a real base resume."],
-  ["Daily graded seats", "Up to 3 searches/day. Grade A–F, why, and gaps — not 200 junk links."],
-  ["Packet + Confirm", "CareerOS shows company + the exact careers website. You download the packet, apply on THAT site, then tap I submitted. We never Easy Apply for you."],
+  ["Account + targets", "Role, experience, target locations, CTC, notice period, and industry stack."],
+  ["Resume ready", "ATS scorecard + Overleaf/LaTeX builder so packets start from a verified base resume."],
+  ["Daily graded seats", "Up to 3 searches/day. Multi-portal scraping with grade A–F, why, and gaps — not 200 junk links."],
+  ["Packet + Confirm", "AuraCareer AI surfaces the exact careers website. You download the LaTeX/PDF packet, apply on THAT site, then tap I submitted."],
   ["Track pipeline", "Applied → interview → offer. Interviews prove the OS, not vanity queue counts."],
 ];
 

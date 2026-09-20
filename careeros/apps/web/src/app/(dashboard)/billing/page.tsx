@@ -85,11 +85,11 @@ export default function BillingPage() {
         key: orderRes.keyId,
         amount: orderRes.amount,
         currency: orderRes.currency,
-        name: "CareerOS AI",
+        name: "AuraCareer AI",
         description: `${targetPlan === "concierge" ? "Concierge" : "Pro"} Plan Subscription`,
         order_id: orderRes.orderId,
         prefill: {
-          name: user?.name || "CareerOS Candidate",
+          name: user?.name || "AuraCareer Candidate",
           email: user?.email || "",
         },
         theme: {
@@ -141,7 +141,7 @@ export default function BillingPage() {
     <div className="space-y-6">
       <PageHeader
         title="Billing & Subscriptions"
-        description="India pricing for manufacturing & SCM leaders. You still Confirm every apply — CareerOS never Easy-Applies."
+        description="India pricing for career leaders. You still Confirm every apply — AuraCareer AI keeps you in sovereign control."
       />
 
       <div className="grid gap-6 md:grid-cols-3">

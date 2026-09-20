@@ -3,7 +3,7 @@ import { pageMetadata } from "@/lib/seo/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Sign in",
-  description: "Sign in to CareerOS — daily graded seats and Confirm apply for India manufacturing hunters.",
+  description: "Sign in to AuraCareer AI — sovereign autonomous career command center.",
   path: "/login",
 });
 

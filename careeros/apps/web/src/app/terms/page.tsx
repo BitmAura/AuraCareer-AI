@@ -3,7 +3,7 @@ import { pageMetadata } from "@/lib/seo/site";
 
 export const metadata = pageMetadata({
   title: "Terms",
-  description: "CareerOS terms: assisted Career OS for India. You Confirm every apply.",
+  description: "AuraCareer AI terms: Sovereign Autonomous Career Platform by BitmAura.",
   path: "/terms",
 });
 
@@ -12,7 +12,7 @@ export default function TermsPage() {
     <MarketingShell>
       <h1 className="font-heading text-4xl font-bold">Terms</h1>
       <p className="mt-4 text-[#3d4654]">
-        CareerOS is an assisted Career Operating System. You remain responsible for the accuracy of your resume and for every application you Confirm on employer sites.
+        AuraCareer AI is a sovereign autonomous Career Operating System. You remain responsible for the accuracy of your resume and for every application you confirm on employer sites.
       </p>
       <p className="mt-4 text-[#3d4654]">
         Concierge is billed in INR as stated on Pricing. The 14-day pilot promise applies after Profile and Resume are set.

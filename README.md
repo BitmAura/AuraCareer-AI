@@ -1,6 +1,6 @@
-# CareerOS AI
+# AuraCareer AI
 
-Assisted Career OS for India manufacturing (Purchase / SCM / plant). You Confirm every apply.
+Sovereign Autonomous Career Operating System by **BitmAura**. Multi-portal stealth scraping, single-column Overleaf/LaTeX resume generation with ATS verification ($\ge 85\%$), verified recruiter cold outreach with Calendly link extraction, and closed-loop self-learning.
 
 ## Run locally
 

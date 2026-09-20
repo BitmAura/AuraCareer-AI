@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
-export const alt = "CareerOS AI — Assisted Career Operating System for India";
+export const alt = "AuraCareer AI — Sovereign Autonomous Career Platform by BitmAura";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -21,7 +21,7 @@ export default function OpenGraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ fontSize: 72, fontWeight: 800, letterSpacing: -2 }}>CareerOS</div>
+        <div style={{ fontSize: 72, fontWeight: 800, letterSpacing: -2 }}>AuraCareer AI</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 900 }}>
           <div style={{ fontSize: 36, fontWeight: 600, color: "#f3f1ec" }}>
             Resume · ATS-style readiness · Graded jobs · Confirm apply

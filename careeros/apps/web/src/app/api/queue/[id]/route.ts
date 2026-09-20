@@ -85,7 +85,7 @@ export async function POST(req: Request, ctx: Ctx) {
         applyUrl: live.applyUrl,
         liveness: live.liveness,
         honesty:
-          "CareerOS opened the employer careers page. Mark 'I submitted' only after you finish their form.",
+          "AuraCareer AI opened the employer careers page. Mark 'I submitted' only after you finish their form.",
       });
     }
 
@@ -211,7 +211,7 @@ export async function POST(req: Request, ctx: Ctx) {
       applyUrl: live.applyUrl,
       liveness: live.liveness,
       honesty:
-        "CareerOS opened the employer careers page. Mark 'I submitted' only after you finish their form.",
+        "AuraCareer AI opened the employer careers page. Mark 'I submitted' only after you finish their form.",
     });
   }
 

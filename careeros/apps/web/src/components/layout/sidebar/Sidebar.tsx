@@ -16,6 +16,8 @@ import {
   CalendarDays,
   Wand2,
   Settings,
+  Mail,
+  Shield,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -23,7 +25,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useSidebar } from "@/store/use-sidebar";
 
-/** Pilot nav — only live product surfaces (stubs hidden). */
+/** Pilot nav — live product surfaces with autonomous agent intelligence. */
 const navItems = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { title: "My Profile", href: "/profile", icon: User },
@@ -31,9 +33,11 @@ const navItems = [
   { title: "Builder", href: "/resume/builder", icon: Pencil },
   { title: "Jobs", href: "/jobs", icon: Briefcase },
   { title: "Daily queue", href: "/queue", icon: ListChecks },
+  { title: "Recruiter Outreach", href: "/outreach", icon: Mail },
   { title: "Applications", href: "/applications", icon: Send },
   { title: "Interviews", href: "/interviews", icon: CalendarDays },
   { title: "AI tools", href: "/ai-tools", icon: Wand2 },
+  { title: "Agent Control", href: "/agent/settings", icon: Shield },
   { title: "Settings", href: "/settings", icon: Settings },
 ];
 
@@ -54,7 +58,9 @@ export function Sidebar() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Sparkles className="h-5 w-5" />
             </div>
-            <span className="text-lg font-semibold tracking-tight">CareerOS</span>
+            <span className="text-lg font-bold tracking-tight text-foreground flex items-center">
+              AuraCareer<span className="text-xs text-primary font-mono ml-1 px-1.5 py-0.5 rounded bg-primary/10">AI</span>
+            </span>
           </Link>
         )}
         <Tooltip>

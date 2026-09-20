@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { api, ApiError } from "@/lib/api";
 import type { CareerTargets } from "@/lib/db/types";
-import { INDUSTRY_PACKS, emptyTargets } from "@/lib/product/targets";
+import { INDUSTRY_PACKS, MANUFACTURING_ROLE_SUGGESTIONS, emptyTargets } from "@/lib/product/targets";
 
 type TargetsResponse = { targets: CareerTargets; ready: boolean };
 
@@ -79,7 +79,7 @@ function ProfilePageInner() {
     <div className="space-y-6">
       <PageHeader
         title="My Profile"
-        description="Set hunt targets so CareerOS ranks the right seats for you"
+        description="Set hunt targets so AuraCareer AI ranks the right seats for you"
       />
 
       {onboarding && (
@@ -100,9 +100,9 @@ function ProfilePageInner() {
             Career targets
           </CardTitle>
           <CardDescription>
-            Drives daily queue ranking and match grades across India. Cities are optional preference —
-            we never hide other cities unless you turn relocate off. Example: Regional Sales Manager · 8
-            yrs · prefer Pune, Mumbai.
+            Drives daily queue ranking and match grades across India manufacturing plants. Cities are
+            optional preference — we never hide other cities unless you turn relocate off. Covers
+            purchase, sales, plant ops, ITI/HVAC trades, HR/admin, and plant IT.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -114,10 +114,28 @@ function ProfilePageInner() {
                 <div className="space-y-2 md:col-span-2">
                   <Label>Target designation / role</Label>
                   <Input
-                    placeholder="Senior Procurement Manager"
+                    placeholder="e.g. HVAC Technician, Purchase Executive, Plant HR"
                     value={form.targetRole}
                     onChange={(e) => setForm((f) => ({ ...f, targetRole: e.target.value }))}
                   />
+                  {form.industryPack === "manufacturing_scm" && (
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {MANUFACTURING_ROLE_SUGGESTIONS.map((role) => (
+                        <button
+                          key={role}
+                          type="button"
+                          className="rounded-md border border-border bg-muted/40 px-2 py-0.5 text-xs text-muted-foreground hover:bg-muted hover:text-foreground"
+                          onClick={() => setForm((f) => ({ ...f, targetRole: role }))}
+                        >
+                          {role}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  <p className="text-xs text-muted-foreground">
+                    Manufacturing plant roles only — tap a chip or type your designation. Large OEMs
+                    are found on careers/ATS; local Ballari plant ads often need Paste JD.
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <Label>Years of experience</Label>
@@ -150,7 +168,7 @@ function ProfilePageInner() {
                 <div className="space-y-2 md:col-span-2">
                   <Label>Preferred cities (optional, comma-separated)</Label>
                   <Input
-                    placeholder="e.g. Mumbai, Pune — or leave blank for Pan-India"
+                    placeholder="e.g. Ballari, Karnataka — or Mumbai, Pune"
                     value={citiesText}
                     onChange={(e) => setCitiesText(e.target.value)}
                   />

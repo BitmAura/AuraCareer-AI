@@ -24,9 +24,10 @@ function LoginInner() {
         <CardHeader className="space-y-1 text-center">
           <Link
             href="/"
-            className="mx-auto text-lg font-bold tracking-tight text-foreground hover:opacity-80"
+            className="mx-auto text-lg font-bold tracking-tight text-foreground hover:opacity-80 flex items-center gap-1"
           >
-            CareerOS
+            <span>AuraCareer</span>
+            <span className="text-xs text-primary font-mono px-1 py-0.5 rounded bg-primary/10">AI</span>
           </Link>
           <CardTitle className="text-2xl">Sign in</CardTitle>
           <CardDescription>

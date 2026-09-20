@@ -3,12 +3,49 @@ import type { CareerTargets } from "@/lib/db/types";
 export const DEFAULT_INDUSTRY_PACK = "manufacturing_scm" as const;
 
 export const INDUSTRY_PACKS = [
-  { id: "manufacturing_scm", label: "Manufacturing — Purchase / SCM / Plant" },
+  {
+    id: "manufacturing_scm",
+    label: "Manufacturing plant — purchase, sales, ops, trades, HVAC, HR, IT",
+  },
   { id: "healthcare", label: "Healthcare — Clinical / Hospital / Med Affairs" },
   { id: "general", label: "General professional" },
 ] as const;
 
-export type RoleFamily = "sales" | "procurement" | "plant_ops" | "healthcare" | "general";
+/**
+ * Hunt families inside manufacturing plants / industrial sites.
+ * trades = ITI/diploma/HVAC/driver/JCB/operator; hr_admin = HR + office admin;
+ * it_mfg = plant IT / OT support (not SaaS product).
+ */
+export type RoleFamily =
+  | "sales"
+  | "procurement"
+  | "plant_ops"
+  | "trades"
+  | "hr_admin"
+  | "it_mfg"
+  | "healthcare"
+  | "general";
+
+/** Profile chips — manufacturing workforce only. */
+export const MANUFACTURING_ROLE_SUGGESTIONS = [
+  "Purchase Executive",
+  "Procurement Manager",
+  "Store / Inventory",
+  "Sales Executive — Manufacturing",
+  "Regional Sales Manager",
+  "Production Supervisor",
+  "Plant / Maintenance Manager",
+  "Quality Engineer",
+  "HVAC Technician",
+  "AC Technician",
+  "ITI Fitter / Electrician",
+  "Diploma Mechanical",
+  "JCB / Crane Operator",
+  "Lorry / Truck Driver",
+  "HR Executive — Plant",
+  "Admin / Office Assistant",
+  "IT Support — Manufacturing",
+] as const;
 
 export function emptyTargets(): CareerTargets {
   return {
@@ -49,32 +86,72 @@ export function normalizeTargets(raw: Partial<CareerTargets> | null | undefined)
 /** Infer family from free text (role title, job title+description). */
 export function inferRoleFamilyFromText(text: string): RoleFamily {
   const role = (text || "").toLowerCase();
+  // Title-ish prefix — avoids JD body words (operator/technician) hijacking family.
+  const head = role.slice(0, 160);
+
   if (
-    /sales|account manager|key account|kam\b|rsm\b|bdm\b|business development|channel|dealer|distributor|institutional|commercial manager|area sales|territory|revenue/.test(
+    /clinical|hospital|medical affairs|physician|doctor|nurse|healthcare|patient care/.test(role)
+  ) {
+    return "healthcare";
+  }
+
+  // Specific trades on title/head first (HVAC, ITI, drivers, craft).
+  if (
+    /\biti\b|hvac|a\/?c tech|ac tech|air conditioning|refrigeration|electrician|fitter|welder|plumber|jcb|excavator|crane operator|rigger|lorry|truck driver|heavy vehicle|forklift|cnc operator|millwright|boiler operator|instrumentation tech/.test(
+      head,
+    )
+  ) {
+    return "trades";
+  }
+
+  if (
+    /\bhr\b|human resource|talent acquisition|recruitment|payroll|admin\b|administration|office assistant|front office|receptionist|facility coordinator/.test(
+      head,
+    )
+  ) {
+    return "hr_admin";
+  }
+
+  if (
+    /\bit support\b|it executive|information technology|system admin|sysadmin|network engineer|helpdesk|help desk|desktop support|sap basis|ot support|plant it|infra support/.test(
+      head,
+    )
+  ) {
+    return "it_mfg";
+  }
+
+  if (
+    /sales|account manager|key account|kam\b|rsm\b|bdm\b|business development|channel|dealer|distributor|institutional|commercial manager|area sales|territory|revenue|partner success|customer program/.test(
       role,
     )
   ) {
     return "sales";
   }
+
   if (
-    /production|plant|maintenance|quality|manufacturing engineer|shift incharge|operations manager|factory|ehs|tpm|lean/.test(
+    /production|plant manager|maintenance manager|quality|manufacturing engineer|shift incharge|operations manager|factory|ehs|tpm|lean|production supervisor|shop floor|project lead|business intelligence/.test(
       role,
     )
   ) {
     return "plant_ops";
   }
+
   if (
-    /clinical|hospital|medical|physician|doctor|nurse|healthcare|patient/.test(role)
-  ) {
-    return "healthcare";
-  }
-  if (
-    /procure|purchase|scm|supply chain|sourcing|vendor|material|buyer|planning|logistics|category manager|stores|inventory/.test(
+    /procure|purchase|scm|supply chain|sourcing|vendor|material|buyer|planning|logistics|category manager|stores|inventory|warehouse/.test(
       role,
     )
   ) {
     return "procurement";
   }
+
+  // Weaker trades signals (technician/operator/diploma) — title/head only.
+  if (
+    /diploma|technician|helper|\boperator\b|mechanic/.test(head) &&
+    !/manager|director|engineer|lead\b|head\b/.test(head)
+  ) {
+    return "trades";
+  }
+
   return "general";
 }
 
@@ -91,13 +168,23 @@ export function inferRoleFamily(targets: CareerTargets | null | undefined): Role
   return "general";
 }
 
-/** True when candidate family and job family are compatible for queue admission. */
+/**
+ * Compatible families for queue admission.
+ * trades ↔ plant_ops (same plant workforce). Others stay strict except general.
+ */
 export function roleFamiliesCompatible(
   candidate: RoleFamily,
   job: RoleFamily,
 ): boolean {
   if (candidate === "general" || job === "general") return true;
-  return candidate === job;
+  if (candidate === job) return true;
+  if (
+    (candidate === "trades" && job === "plant_ops") ||
+    (candidate === "plant_ops" && job === "trades")
+  ) {
+    return true;
+  }
+  return false;
 }
 
 /** Keywords for TinyFish queries + match rubric — follows Profile targetRole. */
@@ -107,13 +194,19 @@ export function packKeywordsForTargets(targets: CareerTargets | null | undefined
     case "sales":
       return "sales key account channel distributor institutional B2B manufacturing commercial revenue";
     case "plant_ops":
-      return "production plant quality maintenance manufacturing operations lean TPM safety";
+      return "production plant quality maintenance manufacturing operations lean TPM safety supervisor";
+    case "trades":
+      return "ITI diploma HVAC technician electrician fitter operator JCB driver manufacturing plant";
+    case "hr_admin":
+      return "HR human resources recruitment payroll admin office plant manufacturing";
+    case "it_mfg":
+      return "IT support network helpdesk SAP plant manufacturing SCADA MES system admin";
     case "healthcare":
       return "clinical hospital medical doctor physician healthcare patient care";
     case "procurement":
       return "procurement purchase SAP MM supply chain vendor negotiation manufacturing plant sourcing";
     default:
-      return "manufacturing India careers jobs";
+      return "manufacturing plant India careers jobs";
   }
 }
 

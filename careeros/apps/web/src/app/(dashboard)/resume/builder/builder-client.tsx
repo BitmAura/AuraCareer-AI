@@ -285,7 +285,7 @@ export default function ResumeBuilderPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${data.contact?.name || "careeros-resume"}-${mode}.md`;
+    a.download = `${data.contact?.name || "auracareer-resume"}-${mode}.md`;
     a.click();
     URL.revokeObjectURL(url);
   };

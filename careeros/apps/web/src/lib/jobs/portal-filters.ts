@@ -6,7 +6,7 @@ import type { CareerTargets } from "@/lib/db/types";
 import { packKeywordsForTargets } from "@/lib/product/targets";
 
 const INDIA_LOC =
-  /\bindia\b|bengaluru|bangalore|mumbai|pune|chennai|hyderabad|delhi|gurgaon|gurugram|noida|kolkata|ahmedabad|coimbatore|vadodara|nashik|jaipur|ncr\b|andhra pradesh|karnataka|maharashtra|tamil nadu|telangana|gujarat|uttar pradesh|madhya pradesh|rajasthan|kerala|odisha|west bengal|haryana|punjab/;
+  /\bindia\b|bengaluru|bangalore|mumbai|pune|chennai|hyderabad|delhi|gurgaon|gurugram|noida|kolkata|ahmedabad|coimbatore|vadodara|nashik|jaipur|ncr\b|ballari|bellary|hosapete|hospet|hubli|hubballi|mysuru|mysore|mangaluru|mangalore|andhra pradesh|karnataka|maharashtra|tamil nadu|telangana|gujarat|uttar pradesh|madhya pradesh|rajasthan|kerala|odisha|west bengal|haryana|punjab/;
 
 const NON_INDIA_LOC =
   /\b(united states|\busa\b|\bus\b|u\.s\.a?\b|canada|mexico|china|germany|europe|\buk\b|united kingdom|london|seattle|california|texas|new york|florida|illinois|massachusetts|washington|colorado|arizona|georgia|san francisco|los angeles|chicago|austin|boston|denver|atlanta|remote\s*[-–]\s*usa|remote\s*[-–]\s*us)\b|,\s*(ca|ny|tx|wa|il|ma|fl|co|az|ga|nj|nc|va|or|mi)\b/;
@@ -49,7 +49,23 @@ export function profileKeywordHit(
   const pack = packKeywordsForTargets(targets).toLowerCase();
   const role = (targets?.targetRole || "").toLowerCase();
   const hay = text.toLowerCase();
-  const tokens = [...pack.split(/\s+/), ...role.split(/\s+/)].filter(
+  const roleTokens = role
+    .split(/[^a-z0-9+]+/)
+    .filter(
+      (t) =>
+        t.length > 2 &&
+        !["the", "and", "for", "with", "from", "india", "years", "year"].includes(t),
+    );
+  // Distinctive craft/role words must appear in the posting (stops Lorry→CNC leaks).
+  const distinctive = roleTokens.filter((t) =>
+    /^(hvac|iti|lorry|jcb|electrician|fitter|welder|driver|refrigeration|crane|ac|technician|purchase|procurement|sales|hr|admin)$/.test(
+      t,
+    ),
+  );
+  if (distinctive.length && !distinctive.some((t) => hay.includes(t))) {
+    return false;
+  }
+  const tokens = [...pack.split(/\s+/), ...roleTokens].filter(
     (t) => t.length > 3 && !["with", "from", "india", "years"].includes(t),
   );
   if (!tokens.length) return true;

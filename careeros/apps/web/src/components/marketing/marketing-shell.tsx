@@ -7,8 +7,9 @@ export function MarketingShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-[#f3f1ec] text-[#12161c] font-sans">
       <header className="border-b border-[#12161c]/10 bg-[#f3f1ec]/90">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <Link href="/" className="font-heading text-xl font-bold tracking-tight">
-            CareerOS
+          <Link href="/" className="font-heading text-xl font-bold tracking-tight flex items-center gap-1.5">
+            <span>AuraCareer</span>
+            <span className="text-xs bg-primary/10 text-primary font-mono px-1.5 py-0.5 rounded border border-primary/20">AI</span>
           </Link>
           <nav className="hidden items-center gap-8 text-sm text-[#3d4654] md:flex">
             {PUBLIC_NAV.map((item) => (

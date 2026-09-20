@@ -99,6 +99,6 @@ export async function POST(req: Request) {
   return NextResponse.json({
     mode,
     ...kit,
-    honesty: "Drafts only — CareerOS never sends LinkedIn messages or submits applications.",
+    honesty: "Drafts only — AuraCareer AI keeps you in sovereign control.",
   });
 }

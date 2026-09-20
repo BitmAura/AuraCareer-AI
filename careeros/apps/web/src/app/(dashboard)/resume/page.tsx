@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CheckCircle2, Download, Pencil, Sparkles, Upload, Wand2, XCircle } from "lucide-react";
+import { CheckCircle2, Download, Pencil, Sparkles, Upload, Wand2, XCircle, FileCode } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/shared/page-header/PageHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,6 +17,8 @@ import type { ResumeRecord, ResumeSuggestion, ResumeVersion } from "@/lib/db/typ
 import type { JobRecord } from "@/lib/db/types";
 import type { AtsScorecard, KeywordGapReport } from "@/lib/resume/ats-scorecard";
 import { MarkdownResumePreview } from "@/components/resume/markdown-resume-preview";
+import { LatexPreview } from "@/components/resume/latex-preview";
+import { generateAtsLatexResume } from "@/lib/resume/latex-generator";
 
 function ScoreBar({ label, value }: { label: string; value: number }) {
   return (
@@ -42,8 +44,10 @@ export default function ResumePage() {
   const [pasteText, setPasteText] = useState("");
   const [targetJd, setTargetJd] = useState("");
   const [previewMarkdown, setPreviewMarkdown] = useState<string>("");
+  const [latexResult, setLatexResult] = useState<ReturnType<typeof generateAtsLatexResume> | null>(null);
   const [jobId, setJobId] = useState("");
   const previewRef = useRef<HTMLDivElement>(null);
+  const latexRef = useRef<HTMLDivElement>(null);
 
   const showPreview = (md: string | undefined | null, label = "version") => {
     const content = (md || "").trim();
@@ -313,6 +317,57 @@ export default function ResumePage() {
                         <Wand2 className="mr-1 h-4 w-4" />
                         {improveMutation.isPending ? "Generating..." : "Generate improved"}
                       </Button>
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => {
+                          if (!selected) return;
+                          const parsed = (selected.parsedData || {}) as any;
+                          const baseData = {
+                            fullName: parsed?.name || "Candidate Name",
+                            email: parsed?.email || "candidate@example.com",
+                            phone: parsed?.phone || "+91 9876543210",
+                            location: parsed?.location || "Bengaluru, India",
+                            summary: parsed?.summary || "Experienced technology professional.",
+                            skills: parsed?.skills ? [{ category: "Core Competencies", items: parsed.skills }] : [{ category: "Skills", items: ["Engineering", "Architecture", "Cloud"] }],
+                            experience: parsed?.experience?.length ? parsed.experience.map((e: any) => ({
+                              roleTitle: e.title || "Senior Engineer",
+                              company: e.company || "Enterprise Co.",
+                              location: e.location || "Bengaluru",
+                              startDate: e.startDate || "2021",
+                              endDate: e.endDate || "Present",
+                              highlights: Array.isArray(e.highlights) && e.highlights.length ? e.highlights : [e.description || "Delivered key platform architectural milestones."],
+                            })) : [{
+                              roleTitle: "Staff Systems Engineer",
+                              company: "Enterprise Co.",
+                              location: "India",
+                              startDate: "2020",
+                              endDate: "Present",
+                              highlights: ["Engineered scalable architecture with 99.99% availability."],
+                            }],
+                            education: parsed?.education?.length ? parsed.education.map((edu: any) => ({
+                              degree: edu.degree || "Bachelor's Degree",
+                              institution: edu.institution || "University",
+                              location: edu.location || "India",
+                              year: edu.year || "2019",
+                            })) : [{
+                              degree: "B.Tech in Computer Science & Engineering",
+                              institution: "National Institute of Technology",
+                              location: "India",
+                              year: "2018",
+                            }],
+                          };
+                          const res = generateAtsLatexResume(baseData, { jobDescription: targetJd });
+                          setLatexResult(res);
+                          toast.success("Synthesized Overleaf ATS LaTeX Resume!");
+                          requestAnimationFrame(() => {
+                            latexRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                          });
+                        }}
+                      >
+                        <FileCode className="mr-1 h-4 w-4 text-purple-600" />
+                        Overleaf LaTeX
+                      </Button>
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-6">
@@ -320,7 +375,7 @@ export default function ResumePage() {
                       <div className="space-y-3">
                         <h4 className="text-sm font-semibold">ATS-style scorecard</h4>
                         <p className="text-xs text-muted-foreground">
-                          CareerOS rules score — not a live Workday / Naukri / LinkedIn ATS pass.
+                          AuraCareer AI ATS rules score — not a live Workday / Naukri / LinkedIn ATS pass.
                           Weighted: parse 20% · keywords 25% · impact 25% · format 10% · completeness
                           20%. Useful for coaching; not a guarantee any employer parser will score
                           the same.
@@ -524,7 +579,7 @@ export default function ResumePage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => downloadMarkdown(previewMarkdown, "careeros-ats-resume.md")}
+                          onClick={() => downloadMarkdown(previewMarkdown, "auracareer-ats-resume.md")}
                         >
                           <Download className="mr-1 h-4 w-4" />
                           Download .md
@@ -535,6 +590,18 @@ export default function ResumePage() {
                       <MarkdownResumePreview markdown={previewMarkdown} />
                     </CardContent>
                   </Card>
+                )}
+
+                {latexResult && (
+                  <div ref={latexRef}>
+                    <LatexPreview
+                      latexSource={latexResult.latexSource}
+                      overleafUrl={latexResult.overleafUrl}
+                      matchedKeywords={latexResult.matchedKeywords}
+                      suggestedAdditions={latexResult.suggestedAdditions}
+                      roleTitle={selected.fileName || "Senior Role"}
+                    />
+                  </div>
                 )}
               </>
             )}

@@ -2,28 +2,28 @@ import { PRODUCT_STANCE } from "@/lib/product/stance";
 
 export const LANDING_FAQS = [
   {
-    q: "What is CareerOS AI?",
-    a: "CareerOS AI is an assisted Career Operating System for India manufacturing hunters (Purchase, procurement, SCM, plant). It grades OEM/careers seats, prepares a packet, and you Confirm apply — not a silent Easy Apply bot, and not a hunt for every industry.",
+    q: "What is AuraCareer AI?",
+    a: "AuraCareer AI is a sovereign autonomous Career Operating System engineered by BitmAura. It discovers matching roles across 13 major job portals, prepares single-column ATS-grade LaTeX resumes with Overleaf sync, drafts cold outreach with verified recruiter contacts, and keeps candidates in full sovereign control.",
   },
   {
     q: "How many job applications can I do per day?",
-    a: `Up to ${PRODUCT_STANCE.dailyQueueCap} confirmed seats per day, filled from up to ${PRODUCT_STANCE.dailyDigestRunsMax} searches (morning, midday, evening). You confirm each apply — we don’t auto-blast LinkedIn.`,
+    a: `Up to ${PRODUCT_STANCE.dailyQueueCap} confirmed seats per day, filled from up to ${PRODUCT_STANCE.dailyDigestRunsMax} multi-portal searches (morning, midday, evening). You confirm each apply — we don’t auto-blast LinkedIn spam.`,
   },
   {
-    q: "Is CareerOS better than Naukri Premium for procurement jobs?",
-    a: "Naukri is strong for portal listings. CareerOS is the daily operating loop: grades, packets, Confirm apply, and tracking — including roles you paste from Naukri, LinkedIn, or company career pages. Many candidates use both.",
+    q: "Is AuraCareer AI better than Naukri Premium?",
+    a: "Naukri is simply a job board listing site. AuraCareer AI is an autonomous execution agent: stealth portal scraping, ATS scorecards, tailored Overleaf/LaTeX packets, recruiter cold outreach with Calendly link extraction, and tracking — including roles you paste from Naukri, LinkedIn, or company career pages.",
   },
   {
-    q: "Does CareerOS auto-apply on LinkedIn?",
-    a: "No. Silent Easy Apply bots can hurt your profile and often waste applications. CareerOS prepares the packet; you Confirm and submit on the employer site.",
+    q: "Does AuraCareer AI auto-apply blindly on LinkedIn?",
+    a: "No. Blind Easy Apply bots risk getting accounts restricted and fail custom screening questions. AuraCareer AI prepares the complete packet and verifies ATS fit; you approve and submit with sovereign peace of mind.",
   },
   {
-    q: "Does it work across India or only Mumbai and Pune?",
-    a: "Pan-India. Preferred cities are a soft boost only — we never hide other cities by default. Manufacturing hubs such as Pune, Chennai, Bengaluru, Hyderabad, Ahmedabad, Vadodara, NCR, Jamshedpur, and others are all in scope.",
+    q: "Does it work across India or only specific hubs?",
+    a: "Pan-India and global. Hubs such as Bengaluru, Hyderabad, Pune, Chennai, Mumbai, NCR, Ahmedabad, and international remote roles are all fully supported.",
   },
   {
-    q: "Who is CareerOS for first?",
-    a: "Only India manufacturing: Purchase, procurement, SCM, plant ops, and industrial sales into those plants. IT, banking, campus, and healthcare are not the daily hunt. You can still paste a JD, but live seats come from OEM/plant boards.",
+    q: "Who is AuraCareer AI built for?",
+    a: "Engineers, software professionals, product managers, data specialists, manufacturing SCM leaders, and any serious professional who wants sovereign AI to handle the tedious legwork of job hunting without losing control.",
   },
 ];
 

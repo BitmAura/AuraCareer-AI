@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/seo/site";
 export const metadata = pageMetadata({
   title: "Pricing — Concierge ₹1,999/mo India",
   description:
-    "CareerOS pricing in INR: free Starter, Concierge ₹1,999/mo for India manufacturing hunters, Pro ₹999 target. 14-day pilot promise.",
+    "AuraCareer AI pricing in INR: free Starter, Concierge ₹1,999/mo for career hunters, Pro ₹999 target. 14-day pilot promise.",
   path: "/pricing",
 });
 
