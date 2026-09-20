@@ -66,7 +66,7 @@ export async function GET(req: Request) {
         checks: [
           {
             id: "seats",
-            label: `≥${buy.pilotMinSeats} India-fit seats queued`,
+            label: `≥${buy.pilotMinSeats} role-fit seats queued`,
             ok: seatsOk,
             value: indiaFitSeats,
           },
@@ -128,7 +128,7 @@ export async function GET(req: Request) {
       checks: [
         {
           id: "seats",
-          label: `≥${buy.pilotMinSeats} India-fit seats queued`,
+          label: `≥${buy.pilotMinSeats} role-fit seats queued`,
           ok: seatsOk,
           value: indiaFitSeats,
         },

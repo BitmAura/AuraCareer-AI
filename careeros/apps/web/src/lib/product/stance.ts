@@ -1,8 +1,8 @@
 /**
- * Locked CareerOS product stance (co-founder, Aug 2026).
+ * Locked AuraCareer AI product stance (co-founder, Aug 2026).
  * Do not market the opposite without an explicit product decision.
  *
- * Naming: we ship as **CareerOS** (hosted assisted Career OS for India manufacturing).
+ * Naming: we ship as **AuraCareer AI** (hosted autonomous Career OS, global).
  * We do NOT brand as "career-ops" / CareerOps — that is a separate open-source CLI
  * (santifer/career-ops). We reuse proven patterns (portal feeds, A–F filter, human submit)
  * under our own product name.
@@ -29,24 +29,24 @@ export const PRODUCT_STANCE = {
    */
   candidateBuyBar: {
     currency: "INR",
-    /** What a mid-senior India manufacturing candidate should pay when value is real. */
+    /** What a mid-senior global candidate should pay when value is real. */
     conciergeInrMonthly: 1999,
     proInrMonthlyTarget: 999,
     /** Paid pilot window before Concierge is considered earned. */
     pilotDays: 14,
-    /** Minimum India-fit seats in pilot window to keep charging. */
+    /** Minimum role-fit seats in pilot window to keep charging. */
     pilotMinSeats: 5,
     /** Minimum tailored packets in pilot window. */
     pilotMinPackets: 3,
     refundPromise:
-      "14-day Concierge pilot: if you get fewer than 5 India-fit seats or 0 packets after setting Profile + Resume, we refund / extend — no debate.",
+      "14-day Concierge pilot: if you get fewer than 5 role-fit seats or 0 packets after setting Profile + Resume, we refund / extend — no debate.",
     mustHave: [
-      "Jobs match my profile role family, cities, CTC, notice — not US tech spam",
-      "Official OEM / ATS sources (Workday + Greenhouse + careers) with why-match + gaps",
+      "Jobs match my profile role family, locations, CTC, notice — globally relevant",
+      "Official ATS sources (Workday + Greenhouse + Lever + careers portals) with why-match + gaps",
       "Packet ready to upload (print-PDF / Markdown) without inventing facts",
-      "I always submit — never silent LinkedIn/Naukri Easy Apply",
+      "I always submit — never silent Easy Apply",
       "Empty search days do not burn my daily credit; paste / alert still works",
-      "I can log interviews so CareerOS proves conversion, not vanity queue counts",
+      "I can log interviews so AuraCareer AI proves conversion, not vanity queue counts",
       "Dashboard tells me the next hunt action and overdue follow-ups — not a blank KPI wall",
     ],
   },

@@ -505,8 +505,8 @@ export async function rewriteResumeSection(
     skills: content,
   };
 
-  const prompt = `Rewrite this resume ${section} for an ATS-friendly Indian manufacturing resume. Return ONLY the rewritten text, no quotes.
-Context: ${context || "procurement / supply chain / plant ops"}
+  const prompt = `Rewrite this resume ${section} for an ATS-friendly professional resume. Return ONLY the rewritten text, no quotes.
+Context: ${context || "professional with strong domain expertise"}
 Input:
 """
 ${content.slice(0, 2000)}
@@ -540,7 +540,7 @@ export async function generateResumeFromOutline(outline: {
       ],
     })) || [];
 
-  const prompt = `Create a structured ATS resume JSON for manufacturing careers in India from this outline. Return ONLY JSON matching:
+  const prompt = `Create a structured ATS resume JSON from this outline. Return ONLY JSON matching:
 {"contact":{"name":"","email":"","phone":"","location":""},"summary":"","skills":[],"experience":[{"role":"","company":"","startDate":"","endDate":"","bullets":[]}],"education":[{"degree":"","institution":"","year":""}]}
 Outline: ${JSON.stringify(outline)}`;
 
@@ -578,7 +578,7 @@ export async function improveResumeMarkdown(
 ): Promise<string> {
   const cleaned = normalizeExtractedText(rawText);
   const templateCtx = TEMPLATE_CONTEXTS[template || "ats_classic"] || TEMPLATE_CONTEXTS.ats_classic;
-  const prompt = `Rewrite this resume into a clean ATS-friendly Markdown resume for manufacturing careers in India.
+  const prompt = `Rewrite this resume into a clean ATS-friendly Markdown resume.
 
 Template focus: ${templateCtx}
 

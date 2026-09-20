@@ -388,7 +388,7 @@ export async function runSupabaseUserDigest(opts: {
       liveCount > 0
         ? `Live OEM/portal seats: ${liveCount}`
         : liveStats?.searched === false
-          ? "No boards returned India-fit seats — paste a real JD URL or set TINYFISH_API_KEY."
+          ? "No live boards returned role-fit seats — paste a real JD URL or set TINYFISH_API_KEY."
           : undefined,
   };
 }

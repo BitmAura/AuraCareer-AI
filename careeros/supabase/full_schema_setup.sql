@@ -186,26 +186,5 @@ create trigger protect_profile_plan_trg
 
 revoke all on function public.protect_profile_plan() from public, anon, authenticated;
 
--- Initial Seed Jobs with Direct ATS / Career URLs
-insert into public.jobs (title, company, location, salary, description, requirements, source, source_kind, source_url, match_score)
-select * from (values
-  ('Senior Procurement Manager', 'Tata Steel', 'Mumbai', '25-35 LPA',
-   'Lead strategic sourcing and vendor management for steel manufacturing operations across India.',
-   '["Procurement","SAP MM","Negotiation","8+ years"]'::jsonb, 'career_page', 'career_page', 'https://www.tatasteel.com/careers/', 95),
-  ('Supply Chain Lead', 'JSW Steel', 'Pune', '22-30 LPA',
-   'Own end-to-end supply chain planning for integrated steel plants with focus on cost and OTIF.',
-   '["Supply Chain","Logistics","Forecasting","6+ years"]'::jsonb, 'career_page', 'career_page', 'https://www.jsw.in/careers', 88),
-  ('Purchase Executive', 'Vedanta', 'Chennai', '18-25 LPA',
-   'Manage purchase orders, supplier follow-ups, and inventory alignment for plant operations.',
-   '["Purchase","Vendor Management","MS Office","4+ years"]'::jsonb, 'career_page', 'career_page', 'https://www.vedantalimited.com/careers', 82),
-  ('Quality Engineer', 'Bosch', 'Bangalore', '12-18 LPA',
-   'Drive quality systems, root-cause analysis, and continuous improvement on the shop floor.',
-   '["Quality","Six Sigma","ISO","3+ years"]'::jsonb, 'career_page', 'career_page', 'https://careers.bosch.com/in/', 78),
-  ('Maintenance Manager', 'Hindalco', 'Renukoot', '20-28 LPA',
-   'Lead preventive and breakdown maintenance for aluminum manufacturing assets.',
-   '["Maintenance","TPM","Mechanical","7+ years"]'::jsonb, 'career_page', 'career_page', 'https://www.hindalco.com/careers', 74),
-  ('Production Supervisor', 'Siemens', 'Aurangabad', '10-15 LPA',
-   'Supervise shift production targets, safety, and manpower for industrial equipment lines.',
-   '["Production","Lean","Team Leadership","5+ years"]'::jsonb, 'career_page', 'career_page', 'https://jobs.siemens.com/careers', 70)
-) as v(title, company, location, salary, description, requirements, source, source_kind, source_url, match_score)
-where not exists (select 1 from public.jobs limit 1);
+-- No seed jobs: the jobs table starts empty.
+-- Live positions are discovered by the autonomous scraper agent.
