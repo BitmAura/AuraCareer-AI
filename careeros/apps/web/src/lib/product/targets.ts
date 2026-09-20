@@ -1,51 +1,51 @@
 import type { CareerTargets } from "@/lib/db/types";
 
-export const DEFAULT_INDUSTRY_PACK = "manufacturing_scm" as const;
+export const DEFAULT_INDUSTRY_PACK = "general" as const;
 
 export const INDUSTRY_PACKS = [
-  {
-    id: "manufacturing_scm",
-    label: "Manufacturing plant — purchase, sales, ops, trades, HVAC, HR, IT",
-  },
-  { id: "healthcare", label: "Healthcare — Clinical / Hospital / Med Affairs" },
-  { id: "general", label: "General professional" },
+  { id: "software_tech", label: "Technology & Software Engineering" },
+  { id: "healthcare", label: "Healthcare & Clinical (Doctors, Nurses, Hospital)" },
+  { id: "finance_accounting", label: "Finance, Accounting, CA & Tax" },
+  { id: "marketing_growth", label: "Digital Marketing, SEO, Content & Growth" },
+  { id: "sales_bizdev", label: "Sales & Business Development" },
+  { id: "manufacturing_scm", label: "Operations, Supply Chain & Manufacturing" },
+  { id: "general", label: "General Professional (All Domains)" },
 ] as const;
 
-/**
- * Hunt families inside manufacturing plants / industrial sites.
- * trades = ITI/diploma/HVAC/driver/JCB/operator; hr_admin = HR + office admin;
- * it_mfg = plant IT / OT support (not SaaS product).
- */
 export type RoleFamily =
+  | "software_eng"
+  | "healthcare"
+  | "finance_accounting"
+  | "marketing"
   | "sales"
   | "procurement"
   | "plant_ops"
   | "trades"
   | "hr_admin"
   | "it_mfg"
-  | "healthcare"
   | "general";
 
-/** Profile chips — manufacturing workforce only. */
-export const MANUFACTURING_ROLE_SUGGESTIONS = [
-  "Purchase Executive",
-  "Procurement Manager",
-  "Store / Inventory",
-  "Sales Executive — Manufacturing",
-  "Regional Sales Manager",
-  "Production Supervisor",
-  "Plant / Maintenance Manager",
-  "Quality Engineer",
-  "HVAC Technician",
-  "AC Technician",
-  "ITI Fitter / Electrician",
-  "Diploma Mechanical",
-  "JCB / Crane Operator",
-  "Lorry / Truck Driver",
-  "HR Executive — Plant",
-  "Admin / Office Assistant",
-  "IT Support — Manufacturing",
+/** Universal role suggestions across major disciplines */
+export const UNIVERSAL_ROLE_SUGGESTIONS = [
+  "Senior Software Engineer",
+  "Full Stack Developer",
+  "Frontend Engineer (React / Next.js)",
+  "Backend Engineer (Node / Python / Java)",
+  "General Physician / Doctor (MBBS / MD)",
+  "Registered Staff Nurse / Nursing Officer",
+  "Chartered Accountant (CA / CPA)",
+  "Financial Analyst / Controller",
+  "Digital Marketing Specialist",
+  "Performance Marketing & SEO Lead",
+  "Product Manager",
+  "Data Scientist / AI Engineer",
+  "Procurement & Supply Chain Manager",
+  "Plant Operations & Quality Manager",
+  "HR Executive & Talent Partner",
+  "Business Development & Key Account Manager",
 ] as const;
+
+export const MANUFACTURING_ROLE_SUGGESTIONS = UNIVERSAL_ROLE_SUGGESTIONS;
 
 export function emptyTargets(): CareerTargets {
   return {
@@ -89,13 +89,43 @@ export function inferRoleFamilyFromText(text: string): RoleFamily {
   // Title-ish prefix — avoids JD body words (operator/technician) hijacking family.
   const head = role.slice(0, 160);
 
+  // 1. Healthcare & Medicine (Doctors, Nurses, Surgeons, Clinical, Pharma)
   if (
-    /clinical|hospital|medical affairs|physician|doctor|nurse|healthcare|patient care/.test(role)
+    /doctor|physician|nurse|nursing|surgeon|mbbs|md\b|bams|bhms|dentist|pharmacist|pharmacy|clinical|hospital|medical affairs|patient care|healthcare|anesthesiologist|pediatrician|pathologist|radiologist|general practitioner/.test(
+      role,
+    )
   ) {
     return "healthcare";
   }
 
-  // Specific trades on title/head first (HVAC, ITI, drivers, craft).
+  // 2. Technology & Software Engineering
+  if (
+    /software|frontend|backend|full\s*stack|developer|programmer|engineer|devops|sre|cloud|solutions architect|web developer|mobile developer|ios|android|react|node|python|java\b|golang|data scientist|machine learning|ai engineer|sde\b|qa engineer|test engineer|systems architect|tech lead|engineering manager/.test(
+      role,
+    )
+  ) {
+    return "software_eng";
+  }
+
+  // 3. Finance, Accounting, CA & Tax
+  if (
+    /accountant|accounting|finance|chartered accountant|\bca\b|\bcpa\b|financial analyst|audit|auditor|taxation|tax analyst|billing|controller|accounts payable|accounts receivable|treasury|bookkeeper|financial planning|fp&a/.test(
+      role,
+    )
+  ) {
+    return "finance_accounting";
+  }
+
+  // 4. Digital Marketing, Growth & SEO
+  if (
+    /digital marketing|performance marketing|marketing manager|growth manager|\bseo\b|\bsem\b|social media|content writer|content marketing|brand manager|campaign manager|ppc|copywriter|ad operations|media buyer/.test(
+      role,
+    )
+  ) {
+    return "marketing";
+  }
+
+  // 5. Specific industrial trades
   if (
     /\biti\b|hvac|a\/?c tech|ac tech|air conditioning|refrigeration|electrician|fitter|welder|plumber|jcb|excavator|crane operator|rigger|lorry|truck driver|heavy vehicle|forklift|cnc operator|millwright|boiler operator|instrumentation tech/.test(
       head,
@@ -104,14 +134,16 @@ export function inferRoleFamilyFromText(text: string): RoleFamily {
     return "trades";
   }
 
+  // 6. HR & People Operations
   if (
-    /\bhr\b|human resource|talent acquisition|recruitment|payroll|admin\b|administration|office assistant|front office|receptionist|facility coordinator/.test(
+    /\bhr\b|human resource|talent acquisition|recruitment|payroll|admin\b|administration|office assistant|front office|receptionist|facility coordinator|people ops/.test(
       head,
     )
   ) {
     return "hr_admin";
   }
 
+  // 7. IT Support / System Admin
   if (
     /\bit support\b|it executive|information technology|system admin|sysadmin|network engineer|helpdesk|help desk|desktop support|sap basis|ot support|plant it|infra support/.test(
       head,
@@ -120,6 +152,7 @@ export function inferRoleFamilyFromText(text: string): RoleFamily {
     return "it_mfg";
   }
 
+  // 8. Sales & Business Development
   if (
     /sales|account manager|key account|kam\b|rsm\b|bdm\b|business development|channel|dealer|distributor|institutional|commercial manager|area sales|territory|revenue|partner success|customer program/.test(
       role,
@@ -128,6 +161,7 @@ export function inferRoleFamilyFromText(text: string): RoleFamily {
     return "sales";
   }
 
+  // 9. Plant Operations & Production
   if (
     /production|plant manager|maintenance manager|quality|manufacturing engineer|shift incharge|operations manager|factory|ehs|tpm|lean|production supervisor|shop floor|project lead|business intelligence/.test(
       role,
@@ -136,6 +170,7 @@ export function inferRoleFamilyFromText(text: string): RoleFamily {
     return "plant_ops";
   }
 
+  // 10. Procurement & Supply Chain
   if (
     /procure|purchase|scm|supply chain|sourcing|vendor|material|buyer|planning|logistics|category manager|stores|inventory|warehouse/.test(
       role,
@@ -144,7 +179,6 @@ export function inferRoleFamilyFromText(text: string): RoleFamily {
     return "procurement";
   }
 
-  // Weaker trades signals (technician/operator/diploma) — title/head only.
   if (
     /diploma|technician|helper|\boperator\b|mechanic/.test(head) &&
     !/manager|director|engineer|lead\b|head\b/.test(head)
@@ -157,20 +191,24 @@ export function inferRoleFamilyFromText(text: string): RoleFamily {
 
 /** Infer hunt family from target role text (drives search keywords + match lexicon). */
 export function inferRoleFamily(targets: CareerTargets | null | undefined): RoleFamily {
-  if (!targets) return "procurement";
+  if (!targets) return "general";
+  if (targets.industryPack === "software_tech") return "software_eng";
   if (targets.industryPack === "healthcare") return "healthcare";
-  if (targets.industryPack === "general") return "general";
+  if (targets.industryPack === "finance_accounting") return "finance_accounting";
+  if (targets.industryPack === "marketing_growth") return "marketing";
+  if (targets.industryPack === "sales_bizdev") return "sales";
+  if (targets.industryPack === "general") {
+    const fromRole = inferRoleFamilyFromText(targets.targetRole || "");
+    return fromRole;
+  }
 
   const fromRole = inferRoleFamilyFromText(targets.targetRole || "");
   if (fromRole !== "general") return fromRole;
-  // Manufacturing pack with empty/unknown role → default beachhead (purchase/SCM)
-  if (!(targets.targetRole || "").trim()) return "procurement";
   return "general";
 }
 
 /**
  * Compatible families for queue admission.
- * trades ↔ plant_ops (same plant workforce). Others stay strict except general.
  */
 export function roleFamiliesCompatible(
   candidate: RoleFamily,
@@ -187,26 +225,32 @@ export function roleFamiliesCompatible(
   return false;
 }
 
-/** Keywords for TinyFish queries + match rubric — follows Profile targetRole. */
+/** Keywords for search queries + match rubric — follows Profile targetRole. */
 export function packKeywordsForTargets(targets: CareerTargets | null | undefined): string {
   const family = inferRoleFamily(targets);
   switch (family) {
+    case "software_eng":
+      return "software engineer full stack backend frontend cloud python java react nextjs node developer SDE";
+    case "healthcare":
+      return "doctor physician nurse MBBS MD hospital clinical healthcare medical patient care surgery";
+    case "finance_accounting":
+      return "finance accounting accountant chartered accountant CA CPA audit tax reconciliation financial analyst billing";
+    case "marketing":
+      return "digital marketing performance marketing SEO growth social media brand campaign SEM content copy";
     case "sales":
-      return "sales key account channel distributor institutional B2B manufacturing commercial revenue";
+      return "sales key account channel distributor institutional B2B commercial revenue business development client";
     case "plant_ops":
       return "production plant quality maintenance manufacturing operations lean TPM safety supervisor";
     case "trades":
-      return "ITI diploma HVAC technician electrician fitter operator JCB driver manufacturing plant";
+      return "ITI diploma HVAC technician electrician fitter operator JCB driver";
     case "hr_admin":
-      return "HR human resources recruitment payroll admin office plant manufacturing";
+      return "HR human resources recruitment payroll admin office talent acquisition people ops";
     case "it_mfg":
-      return "IT support network helpdesk SAP plant manufacturing SCADA MES system admin";
-    case "healthcare":
-      return "clinical hospital medical doctor physician healthcare patient care";
+      return "IT support network helpdesk SAP SCADA MES system admin desktop support";
     case "procurement":
-      return "procurement purchase SAP MM supply chain vendor negotiation manufacturing plant sourcing";
+      return "procurement purchase SAP MM supply chain vendor negotiation sourcing buyer";
     default:
-      return "manufacturing plant India careers jobs";
+      return "professional career openings vacancies jobs hiring opportunities";
   }
 }
 

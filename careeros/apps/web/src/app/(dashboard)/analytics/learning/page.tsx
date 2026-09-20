@@ -5,6 +5,9 @@ import { PageHeader } from "@/components/shared/page-header/PageHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import {
   SAMPLE_LEARNING_REPORT,
   SelfLearningReport,
@@ -21,10 +24,18 @@ import {
   Sparkles,
   ArrowUpRight,
   Plus,
+  BarChart3,
+  Bot,
 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function SelfLearningAnalyticsPage() {
+  const { data: applications = [] } = useQuery({
+    queryKey: ["applications"],
+    queryFn: () => api<any[]>("/applications"),
+  });
+  const [showBenchmark, setShowBenchmark] = useState<boolean>(false);
+
   const [report, setReport] = useState<SelfLearningReport>(SAMPLE_LEARNING_REPORT);
   const insights = generateSelfLearningInsights(report);
 
@@ -48,37 +59,104 @@ export default function SelfLearningAnalyticsPage() {
     toast.success(`Committed '${question}' to Candidate Knowledge Base!`);
   };
 
+  const hasRealData = applications.length > 0;
+  const isDisplaying = hasRealData || showBenchmark;
+
   return (
     <div className="space-y-6 max-w-5xl">
       <PageHeader
         title="Continuous Self-Learning & AGI Optimization"
-        description="Autonomous reinforcement loop analyzing historical conversion across resume formats, email subject lines, portal yields, and recurring screening questions."
+        description="Autonomous reinforcement loop analyzing conversion across resume formats, email subject lines, portal yields, and recurring screening questions."
+        action={
+          !isDisplaying ? (
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-1.5 text-xs h-9"
+              onClick={() => setShowBenchmark(true)}
+            >
+              <Bot className="h-4 w-4 text-purple-500" />
+              Preview Benchmark Model
+            </Button>
+          ) : !hasRealData ? (
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-xs h-9"
+              onClick={() => setShowBenchmark(false)}
+            >
+              Hide Benchmark
+            </Button>
+          ) : null
+        }
       />
 
-      {/* Autonomous Strategy Recommendations Banner */}
-      <Card className="border-primary/30 bg-linear-to-r from-primary/5 via-purple-500/5 to-transparent">
-        <CardHeader className="pb-2">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-            <CardTitle className="text-base font-semibold">Active Agent Strategy Tuning</CardTitle>
+      {!isDisplaying ? (
+        <Card className="border-dashed border-border/70 p-10 text-center">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary mb-3">
+            <BarChart3 className="h-6 w-6" />
           </div>
-          <CardDescription className="text-xs">
-            Model parameters dynamically tuned from historical recruiter responses and interview conversions
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-2 text-xs">
-            {insights.map((rec, i) => (
-              <li key={i} className="flex items-start gap-2 text-foreground">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary text-[10px] font-bold">
-                  {i + 1}
+          <h3 className="text-base font-semibold text-foreground">Awaiting Application Pipeline Data</h3>
+          <p className="text-xs text-muted-foreground max-w-md mx-auto mt-1 mb-5 leading-relaxed">
+            The self-learning reinforcement loop automatically tunes your pitch style, compares single-column LaTeX ATS vs standard markdown yield, and measures portal reply rates as you apply. Currently 0 applications logged.
+          </p>
+          <div className="flex items-center justify-center gap-2">
+            <Button size="sm" className="gap-1.5 text-xs bg-primary hover:bg-primary/90" render={<Link href="/queue" />}>
+              <Sparkles className="h-3.5 w-3.5" />
+              Start Daily Job Hunt Loop
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-1.5 text-xs"
+              onClick={() => setShowBenchmark(true)}
+            >
+              <Bot className="h-3.5 w-3.5 text-purple-500" />
+              Preview Benchmark Intelligence Model
+            </Button>
+          </div>
+        </Card>
+      ) : (
+        <>
+          {/* Benchmark Banner if using simulated baseline */}
+          {!hasRealData && (
+            <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-300">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-amber-500" />
+                <span>
+                  <strong>Benchmark Baseline Model Active:</strong> Displaying calibrated cross-candidate conversion metrics (LaTeX ATS vs Markdown yield, email hooks, portal response curves). Real personal data will dynamically take over once you log applications.
                 </span>
-                <span className="leading-relaxed">{rec}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+              </div>
+              <Button variant="ghost" size="sm" className="h-7 text-xs text-amber-600 dark:text-amber-400" onClick={() => setShowBenchmark(false)}>
+                Dismiss
+              </Button>
+            </div>
+          )}
+
+          {/* Autonomous Strategy Recommendations Banner */}
+          <Card className="border-primary/30 bg-linear-to-r from-primary/5 via-purple-500/5 to-transparent">
+            <CardHeader className="pb-2">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+                <CardTitle className="text-base font-semibold">Active Agent Strategy Tuning</CardTitle>
+              </div>
+              <CardDescription className="text-xs">
+                Model parameters dynamically tuned from historical recruiter responses and interview conversions
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2 text-xs">
+                {insights.map((rec, i) => (
+                  <li key={i} className="flex items-start gap-2 text-foreground">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary text-[10px] font-bold">
+                      {i + 1}
+                    </span>
+                    <span className="leading-relaxed">{rec}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
 
       {/* Grid: 1. Resume A/B Performance, 2. Email Subject Line Yields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -268,8 +346,10 @@ export default function SelfLearningAnalyticsPage() {
               </div>
             </div>
           ))}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </>
+      )}
     </div>
   );
 }

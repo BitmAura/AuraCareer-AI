@@ -111,7 +111,14 @@ export type ApplicationRecord = {
   job?: JobRecord;
 };
 
-export type IndustryPackId = "manufacturing_scm" | "healthcare" | "general";
+export type IndustryPackId =
+  | "software_tech"
+  | "healthcare"
+  | "finance_accounting"
+  | "marketing_growth"
+  | "sales_bizdev"
+  | "manufacturing_scm"
+  | "general";
 
 /** Candidate hunt targets — drives digest ranking + match rubric */
 export type CareerTargets = {

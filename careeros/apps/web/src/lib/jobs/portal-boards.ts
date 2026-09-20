@@ -14,8 +14,161 @@ export type PortalBoard = {
   indiaHiring: boolean;
 };
 
-/** Boards that post India manufacturing / plant / supply roles. */
-export const INDIA_MANUFACTURING_PORTAL_BOARDS: PortalBoard[] = [
+/** Boards across all professional families (Tech, Healthcare, Finance, Marketing, Ops). */
+export const PORTAL_BOARDS: PortalBoard[] = [
+  // 1. Healthcare, Clinical & Doctors / Nurses
+  {
+    id: "gh-zocdoc",
+    company: "Zocdoc",
+    kind: "greenhouse",
+    token: "zocdoc",
+    tags: ["healthcare", "clinical", "hospital", "medical"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-oscar",
+    company: "Oscar Health",
+    kind: "greenhouse",
+    token: "oscar",
+    tags: ["healthcare", "clinical", "hospital", "medical"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-doximity",
+    company: "Doximity",
+    kind: "greenhouse",
+    token: "doximity",
+    tags: ["healthcare", "clinical", "medical", "doctor"],
+    indiaHiring: true,
+  },
+
+  // 2. Technology & Software Engineering
+  {
+    id: "gh-inmobi",
+    company: "InMobi",
+    kind: "greenhouse",
+    token: "inmobi",
+    tags: ["tech", "software", "engineering", "marketing"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-canonical",
+    company: "Canonical",
+    kind: "greenhouse",
+    token: "canonical",
+    tags: ["tech", "software", "engineering", "cloud"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-razorpay",
+    company: "Razorpay",
+    kind: "greenhouse",
+    token: "razorpaysoftwareprivatelimited",
+    tags: ["tech", "software", "fintech", "finance"],
+    indiaHiring: true,
+  },
+  {
+    id: "lev-cred",
+    company: "CRED",
+    kind: "lever",
+    token: "cred",
+    tags: ["tech", "software", "fintech", "finance"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-cloudflare",
+    company: "Cloudflare",
+    kind: "greenhouse",
+    token: "cloudflare",
+    tags: ["tech", "software", "engineering", "network"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-datadog",
+    company: "Datadog",
+    kind: "greenhouse",
+    token: "datadog",
+    tags: ["tech", "software", "engineering"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-gitlab",
+    company: "GitLab",
+    kind: "greenhouse",
+    token: "gitlab",
+    tags: ["tech", "software", "engineering"],
+    indiaHiring: true,
+  },
+
+  // 3. Finance, Accounting & FinTech
+  {
+    id: "gh-stripe",
+    company: "Stripe",
+    kind: "greenhouse",
+    token: "stripe",
+    tags: ["finance", "fintech", "accounting", "tech"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-block",
+    company: "Block / Square",
+    kind: "greenhouse",
+    token: "block",
+    tags: ["finance", "fintech", "accounting"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-chime",
+    company: "Chime",
+    kind: "greenhouse",
+    token: "chime",
+    tags: ["finance", "fintech", "accounting"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-monzo",
+    company: "Monzo",
+    kind: "greenhouse",
+    token: "monzo",
+    tags: ["finance", "accounting", "fintech"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-carta",
+    company: "Carta",
+    kind: "greenhouse",
+    token: "carta",
+    tags: ["finance", "accounting", "fintech"],
+    indiaHiring: true,
+  },
+
+  // 4. Digital Marketing, Media & Growth
+  {
+    id: "gh-reddit",
+    company: "Reddit",
+    kind: "greenhouse",
+    token: "reddit",
+    tags: ["marketing", "growth", "advertising", "media"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-affirm",
+    company: "Affirm",
+    kind: "greenhouse",
+    token: "affirm",
+    tags: ["marketing", "growth", "fintech"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-instacart",
+    company: "Instacart",
+    kind: "greenhouse",
+    token: "instacart",
+    tags: ["marketing", "growth", "ops"],
+    indiaHiring: true,
+  },
+
+  // 5. Operations, SCM & Industrial
   {
     id: "gh-fictiv",
     company: "Fictiv",
@@ -34,23 +187,27 @@ export const INDIA_MANUFACTURING_PORTAL_BOARDS: PortalBoard[] = [
   },
 ];
 
+export const INDIA_MANUFACTURING_PORTAL_BOARDS = PORTAL_BOARDS;
+
 export function boardsForRoleFamily(family: string): PortalBoard[] {
   const prefer =
-    family === "sales"
-      ? ["sales", "ops"]
-      : family === "procurement"
-        ? ["supply", "ops", "manufacturing"]
-        : family === "plant_ops" || family === "trades"
-          ? ["manufacturing", "plant", "ops"]
-          : family === "hr_admin" || family === "it_mfg"
-            ? ["ops", "manufacturing"]
-            : ["manufacturing", "ops", "sales", "supply"];
+    family === "software_eng"
+      ? ["software", "tech", "engineering", "cloud"]
+      : family === "healthcare"
+        ? ["healthcare", "clinical", "hospital", "medical", "doctor"]
+        : family === "finance_accounting"
+          ? ["finance", "accounting", "fintech"]
+          : family === "marketing"
+            ? ["marketing", "growth", "advertising", "media"]
+            : family === "sales"
+              ? ["sales", "bizdev", "commercial"]
+              : family === "procurement" || family === "plant_ops"
+                ? ["supply", "ops", "manufacturing"]
+                : ["tech", "software", "healthcare", "finance", "marketing", "ops"];
 
-  return [...INDIA_MANUFACTURING_PORTAL_BOARDS]
-    .filter((b) => b.indiaHiring)
-    .sort((a, b) => {
-      const as = a.tags.some((t) => prefer.includes(t)) ? 0 : 1;
-      const bs = b.tags.some((t) => prefer.includes(t)) ? 0 : 1;
-      return as - bs;
-    });
+  return [...PORTAL_BOARDS].sort((a, b) => {
+    const aMatch = a.tags.some((t) => prefer.includes(t)) ? 1 : 0;
+    const bMatch = b.tags.some((t) => prefer.includes(t)) ? 1 : 0;
+    return bMatch - aMatch;
+  });
 }
