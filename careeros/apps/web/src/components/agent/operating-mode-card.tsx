@@ -9,9 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Zap, CheckCircle2, SlidersHorizontal, Settings2 } from "lucide-react";
 
-export function OperatingModeCard() {
+export function OperatingModeCard({ appliedCount = 0 }: { appliedCount?: number }) {
   const [mode, setMode] = useState<OperatingMode>("approval");
-  const [dailyApplied, setDailyApplied] = useState<number>(4);
   const [dailyCap, setDailyCap] = useState<number>(20);
 
   useEffect(() => {
@@ -126,7 +125,7 @@ export function OperatingModeCard() {
           <div className="flex items-center gap-2 whitespace-nowrap bg-background/80 px-3 py-1.5 rounded-md border border-border/40">
             <span className="text-[11px] text-muted-foreground">Daily Quota:</span>
             <span className="text-xs font-semibold text-foreground">
-              {dailyApplied} / {dailyCap} applied
+              {appliedCount} / {dailyCap} applied
             </span>
           </div>
         </div>
