@@ -358,9 +358,13 @@ export async function extractJobFromUrl(url: string): Promise<ExtractedJob> {
 
   if (isTinyFishConfigured()) {
     try {
-      return await extractViaTinyFish(url, source);
+      const tfPromise = extractViaTinyFish(url, source);
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error("TinyFish extract timed out")), 5000),
+      );
+      return await Promise.race([tfPromise, timeoutPromise]);
     } catch (e) {
-      console.warn("TinyFish job extract failed, falling back to native", e);
+      console.warn("TinyFish job extract failed or timed out, falling back to native", e);
       try {
         return await extractViaNative(url, source);
       } catch {

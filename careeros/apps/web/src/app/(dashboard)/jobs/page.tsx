@@ -15,6 +15,7 @@ import { api, ApiError } from "@/lib/api";
 import type { JobRecord, ResumeRecord } from "@/lib/db/types";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/store/use-auth";
+import { htmlToPlainText } from "@/lib/jobs/html-plain";
 
 type JobRow = JobRecord & {
   matchLive?: boolean;
@@ -198,7 +199,9 @@ export default function JobsPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="mb-2 text-sm text-muted-foreground line-clamp-2">{job.description}</p>
+              <p className="mb-2 text-sm text-muted-foreground line-clamp-2">
+                {htmlToPlainText(job.description || "")}
+              </p>
               {job.matchWhy && job.matchWhy.length > 0 && (
                 <ul className="mb-3 list-inside list-disc text-xs text-muted-foreground">
                   {job.matchWhy.map((w) => (

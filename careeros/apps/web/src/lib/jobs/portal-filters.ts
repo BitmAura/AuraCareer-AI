@@ -19,31 +19,44 @@ export function indiaRelevantLocation(
   if (!loc) return false;
 
   const isWorldwideTarget = (targets?.cities || []).some((c) =>
-    /\b(worldwide|global|any|remote|all)\b/i.test(c),
+    /\b(worldwide|global|all)\b/i.test(c),
   );
 
-  // If candidate is hunting globally/remote, allow verified global postings
+  // If candidate is explicitly hunting worldwide/global, allow
   if (isWorldwideTarget) {
     return true;
   }
 
-  // Explicit non-India first (catches "San Francisco, CA") when hunting domestic
-  if (NON_INDIA_LOC.test(loc) && !INDIA_LOC.test(loc)) {
+  // Explicit foreign/non-India location MUST be rejected unless worldwide is targeted
+  if (NON_INDIA_LOC.test(loc)) {
     return false;
   }
 
-  const hasIndia = INDIA_LOC.test(loc);
   const cities = (targets?.cities || []).map((c) => c.toLowerCase().trim()).filter(Boolean);
-  if (cities.some((c) => c && loc.includes(c))) {
-    // Target city match still blocked if clearly US/EU
-    if (NON_INDIA_LOC.test(loc) && !hasIndia) return false;
-    return true;
+  const isCityTargeted = cities.length > 0;
+
+  // If candidate has specific target cities (e.g. Bangalore)
+  if (isCityTargeted) {
+    if (cities.some((c) => c && loc.includes(c))) {
+      return true;
+    }
+    // Allow pan-India remote if candidate allows remote
+    if (cities.includes("remote") && /\b(remote|work from home|wfh)\b/i.test(loc) && !NON_INDIA_LOC.test(loc)) {
+      return true;
+    }
+    // If open to relocate is true, allow other verified Indian locations
+    if (targets?.openToRelocate && INDIA_LOC.test(loc)) {
+      return true;
+    }
+    return false;
   }
-  if (hasIndia) return true;
+
+  // Fallback if no target cities set: must match India
+  if (INDIA_LOC.test(loc)) return true;
 
   if (
     targets?.openToRelocate &&
-    /\b(apac|asia|remote|worldwide)\b/i.test(loc) &&
+    /\b(apac|asia)\b/i.test(loc) &&
     !NON_INDIA_LOC.test(loc)
   ) {
     return true;

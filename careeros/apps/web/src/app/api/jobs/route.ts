@@ -3,7 +3,7 @@ import { getAuthUser } from "@/lib/auth/session";
 import { localStore } from "@/lib/db/local-store";
 import { matchContextText } from "@/lib/jobs/digest";
 import { evaluateJobMatch } from "@/lib/jobs/match-rubric";
-import { emptyTargets, normalizeTargets } from "@/lib/product/targets";
+import { emptyTargets, jobMatchesTargetLocation, normalizeTargets } from "@/lib/product/targets";
 import { getServiceSupabase, isSupabaseConfigured } from "@/lib/supabase/admin";
 import type { CareerTargets, JobRecord, ResumeRecord } from "@/lib/db/types";
 
@@ -89,7 +89,8 @@ export async function GET(req: Request) {
         const isLegacySeed =
           /manual|beachhead|oem_watchlist/i.test(String(j.source || "")) ||
           String(j.source_kind || "").toLowerCase() === "beachhead";
-        return !isLegacySeed;
+        if (isLegacySeed) return false;
+        return jobMatchesTargetLocation(j.location, targets);
       })
       .map((j) =>
       mapJobWithLiveMatch(

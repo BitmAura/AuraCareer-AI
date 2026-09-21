@@ -241,10 +241,10 @@ async function discoverViaTinyFish(opts: {
   let rejectedHomepage = 0;
   let queryUsed = queries[0] || "";
 
-  for (const q of queries) {
+  for (const q of queries.slice(0, 2)) {
     queryUsed = q;
     try {
-      const results = await tinyfishSearch(q, { numResults: 8 });
+      const results = await tinyfishSearch(q, { numResults: 6 });
       hits += results.length;
       for (const hit of results) {
         const url = hitUrl(hit);

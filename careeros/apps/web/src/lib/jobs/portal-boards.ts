@@ -142,14 +142,38 @@ export const PORTAL_BOARDS: PortalBoard[] = [
     indiaHiring: true,
   },
 
-  // 4. Digital Marketing, Media & Growth
+  // 4. Digital Marketing, Media & Growth (India hubs: Bangalore, Mumbai, Gurgaon)
+  {
+    id: "lev-meesho",
+    company: "Meesho",
+    kind: "lever",
+    token: "meesho",
+    tags: ["marketing", "growth", "performance marketing", "brand", "tech", "sales"],
+    indiaHiring: true,
+  },
+  {
+    id: "gh-inmobi-mktg",
+    company: "InMobi",
+    kind: "greenhouse",
+    token: "inmobi",
+    tags: ["marketing", "growth", "advertising", "media", "tech"],
+    indiaHiring: true,
+  },
+  {
+    id: "lev-cred-mktg",
+    company: "CRED",
+    kind: "lever",
+    token: "cred",
+    tags: ["marketing", "growth", "fintech", "tech"],
+    indiaHiring: true,
+  },
   {
     id: "gh-reddit",
     company: "Reddit",
     kind: "greenhouse",
     token: "reddit",
     tags: ["marketing", "growth", "advertising", "media"],
-    indiaHiring: true,
+    indiaHiring: false,
   },
   {
     id: "gh-affirm",

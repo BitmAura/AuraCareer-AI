@@ -367,10 +367,22 @@ export function jobMatchesTargetLocation(
   jobLocation: string,
   targets: CareerTargets | null | undefined,
 ): boolean {
+  const loc = (jobLocation || "").toLowerCase().trim();
+  if (!loc) return true;
+
+  const isWorldwideTarget = (targets?.cities || []).some((c) =>
+    /\b(worldwide|global|all)\b/i.test(c),
+  );
+  if (isWorldwideTarget) return true;
+
+  const NON_INDIA =
+    /\b(united states|\busa\b|\bus\b|canada|mexico|china|germany|europe|\buk\b|united kingdom|london|seattle|california|texas|new york|florida|illinois|san francisco|chicago|toronto)\b|,\s*(ca|ny|tx|wa|il|ma|fl|uk)\b/;
+  if (NON_INDIA.test(loc)) return false;
+
   if (!targets?.cities?.length) return true;
-  if (targets.openToRelocate !== false) return true;
-  const loc = (jobLocation || "").toLowerCase();
-  if (!loc.trim()) return true;
-  if (/remote|pan[\s-]?india|anywhere|multiple/i.test(loc)) return true;
-  return targets.cities.some((c) => loc.includes(c.toLowerCase()));
+  if (targets.openToRelocate === false) {
+    if (/remote|pan[\s-]?india|anywhere|multiple/i.test(loc)) return true;
+    return targets.cities.some((c) => loc.includes(c.toLowerCase()));
+  }
+  return true;
 }
