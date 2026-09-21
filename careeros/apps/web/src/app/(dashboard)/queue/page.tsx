@@ -591,7 +591,7 @@ export default function DailyQueuePage() {
                     ) : null}
                     <ol className="list-decimal space-y-1 pl-4 text-xs text-muted-foreground">
                       <li>Prepare packet (tailored resume + cover) in AuraCareer AI.</li>
-                      <li>Open the website above — that is the employer form, not Naukri Easy Apply.</li>
+                      <li>Open the website above — that is the direct employer application portal.</li>
                       <li>Upload the packet and submit on their site.</li>
                       <li>Come back here and tap “I submitted” so Applications tracks it.</li>
                     </ol>
