@@ -73,8 +73,13 @@ export function tailorResumeDataToJd(
   }
 
   // Re-prioritize skills: move matching skills to front of lists
-  const tailoredSkills = baseData.skills.map((category) => {
-    const sortedItems = [...category.items].sort((a, b) => {
+  const tailoredSkills = (baseData.skills || []).map((category) => {
+    const rawItems = Array.isArray(category.items)
+      ? category.items
+      : typeof (category as any).skills === "string"
+        ? (category as any).skills.split(/[,|]/).map((x: string) => x.trim())
+        : [];
+    const sortedItems = [...rawItems].sort((a, b) => {
       const aMatch = jdKeywords.some((k) => a.toLowerCase().includes(k));
       const bMatch = jdKeywords.some((k) => b.toLowerCase().includes(k));
       if (aMatch && !bMatch) return -1;
@@ -88,10 +93,17 @@ export function tailorResumeDataToJd(
   });
 
   // Highlight or prioritize experience bullets that mention matched keywords
-  const tailoredExperience = baseData.experience.map((exp) => {
-    const sortedHighlights = [...exp.highlights].sort((a, b) => {
-      const aMatches = matchedKeywords.filter((k) => a.toLowerCase().includes(k)).length;
-      const bMatches = matchedKeywords.filter((k) => b.toLowerCase().includes(k)).length;
+  const tailoredExperience = (baseData.experience || []).map((exp) => {
+    const rawHighlights = Array.isArray(exp.highlights)
+      ? exp.highlights
+      : Array.isArray((exp as any).bullets)
+        ? (exp as any).bullets
+        : typeof (exp as any).description === "string"
+          ? [(exp as any).description]
+          : [];
+    const sortedHighlights = [...rawHighlights].sort((a, b) => {
+      const aMatches = matchedKeywords.filter((k) => String(a).toLowerCase().includes(k)).length;
+      const bMatches = matchedKeywords.filter((k) => String(b).toLowerCase().includes(k)).length;
       return bMatches - aMatches;
     });
     return {

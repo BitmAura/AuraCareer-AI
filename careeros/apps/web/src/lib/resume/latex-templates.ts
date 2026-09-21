@@ -82,22 +82,38 @@ export function generateModernAtsLatex(data: LatexResumeData): string {
   const linksStr = links.length > 0 ? ` $|$ ` + links.join(" $|$ ") : "";
 
   // Skills Section
-  const skillsLatex = data.skills
-    .map(
-      (s) =>
-        `  \\item \\textbf{${sanitizeLatex(s.category)}:} ${s.items.map(sanitizeLatex).join(", ")}`
-    )
+  const skillsLatex = (data.skills || [])
+    .map((s) => {
+      const items = Array.isArray(s.items)
+        ? s.items
+        : typeof (s as any).skills === "string"
+          ? (s as any).skills.split(/[,|]/).map((x: string) => x.trim())
+          : typeof s.items === "string"
+            ? (s.items as string).split(/[,|]/).map((x: string) => x.trim())
+            : [];
+      return `  \\item \\textbf{${sanitizeLatex(s.category)}:} ${items.map(sanitizeLatex).join(", ")}`;
+    })
     .join("\n");
 
   // Experience Section
-  const experienceLatex = data.experience
+  const experienceLatex = (data.experience || [])
     .map((exp) => {
-      const highlights = exp.highlights
-        .map((h) => `    \\item ${sanitizeLatex(h)}`)
+      const rawHighlights = Array.isArray(exp.highlights)
+        ? exp.highlights
+        : Array.isArray((exp as any).bullets)
+          ? (exp as any).bullets
+          : typeof (exp as any).description === "string"
+            ? [(exp as any).description]
+            : [];
+      const highlights = rawHighlights
+        .map((h: unknown) => `    \\item ${sanitizeLatex(String(h))}`)
         .join("\n");
+      const startDate = exp.startDate || (exp as any).date || "";
+      const endDate = exp.endDate || "";
+      const dateRange = startDate && endDate ? `${sanitizeLatex(startDate)} -- ${sanitizeLatex(endDate)}` : sanitizeLatex(startDate || endDate || "Present");
       return `\\resumeSubheading
-  {${sanitizeLatex(exp.roleTitle)}}{${sanitizeLatex(exp.startDate)} -- ${sanitizeLatex(exp.endDate)}}
-  {${sanitizeLatex(exp.company)}}{${sanitizeLatex(exp.location)}}
+  {${sanitizeLatex(exp.roleTitle || (exp as any).role || "")}}{${dateRange}}
+  {${sanitizeLatex(exp.company)}}{${sanitizeLatex(exp.location || "")}}
   \\resumeItemListStart
 ${highlights}
   \\resumeItemListEnd`;
@@ -105,12 +121,13 @@ ${highlights}
     .join("\n\\vspace{4pt}\n");
 
   // Education Section
-  const educationLatex = data.education
+  const educationLatex = (data.education || [])
     .map((edu) => {
-      const honors = edu.honors ? ` $|$ \\textit{${sanitizeLatex(edu.honors)}}` : "";
+      const honors = edu.honors || (edu as any).details ? ` $|$ \\textit{${sanitizeLatex(edu.honors || (edu as any).details)}}` : "";
+      const year = edu.year || (edu as any).date || "";
       return `\\resumeSubheading
-  {${sanitizeLatex(edu.degree)}}{${sanitizeLatex(edu.year)}}
-  {${sanitizeLatex(edu.institution)}}{${sanitizeLatex(edu.location)}${honors}}`;
+  {${sanitizeLatex(edu.degree)}}{${sanitizeLatex(year)}}
+  {${sanitizeLatex(edu.institution)}}{${sanitizeLatex(edu.location || "")}${honors}}`;
     })
     .join("\n\\vspace{4pt}\n");
 

@@ -56,9 +56,8 @@ export function profileKeywordHit(
         t.length > 2 &&
         !["the", "and", "for", "with", "from", "india", "years", "year"].includes(t),
     );
-  // Distinctive craft/role words must appear in the posting (stops Lorry→CNC leaks).
   const distinctive = roleTokens.filter((t) =>
-    /^(hvac|iti|lorry|jcb|electrician|fitter|welder|driver|refrigeration|crane|ac|technician|purchase|procurement|sales|hr|admin)$/.test(
+    /^(hvac|iti|lorry|jcb|electrician|fitter|welder|driver|refrigeration|crane|ac|technician|purchase|procurement|sales|hr|admin|marketing|seo|sem|growth|copywriter|content|analytics)$/.test(
       t,
     ),
   );

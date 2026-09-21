@@ -116,19 +116,25 @@ export function buildDigestSearchQueries(
   const family = inferRoleFamily(targets);
   const role =
     targets?.targetRole?.trim() ||
-    (family === "sales"
-      ? "Regional Sales Manager OR Key Account Manager manufacturing"
-      : family === "plant_ops"
-        ? "Production Manager OR Plant Manager manufacturing"
-        : family === "trades"
-          ? "HVAC Technician OR ITI Electrician OR Plant Operator manufacturing"
-          : family === "hr_admin"
-            ? "HR Executive OR Admin Officer manufacturing plant"
-            : family === "it_mfg"
-              ? "IT Support OR System Admin manufacturing plant"
-              : family === "healthcare"
-                ? "Clinical OR Hospital Consultant"
-                : "Procurement Manager OR Purchase Manager OR Supply Chain Manager");
+    (family === "marketing"
+      ? "Digital Marketing Specialist OR Growth Marketing Manager"
+      : family === "software_eng"
+        ? "Software Engineer OR Full Stack Developer"
+        : family === "finance_accounting"
+          ? "Financial Analyst OR Accountant"
+          : family === "healthcare"
+            ? "Clinical OR Hospital Consultant"
+            : family === "sales"
+              ? "Regional Sales Manager OR Key Account Manager"
+              : family === "plant_ops"
+                ? "Production Manager OR Plant Manager"
+                : family === "trades"
+                  ? "HVAC Technician OR ITI Electrician OR Plant Operator"
+                  : family === "hr_admin"
+                    ? "HR Executive OR Talent Acquisition Specialist"
+                    : family === "it_mfg"
+                      ? "IT Support OR System Admin"
+                      : "Operations Manager OR Product Specialist");
 
   const pack = packKeywordsForTargets(targets);
   const years =
