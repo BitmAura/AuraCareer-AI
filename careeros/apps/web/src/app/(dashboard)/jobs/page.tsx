@@ -157,7 +157,7 @@ export default function JobsPage() {
                   </div>
                 ) : resumes.length === 0 ? (
                   <div className="text-right shrink-0">
-                    <div className="text-[10px] text-muted-foreground text-right leading-tight max-w-[80px]">
+                    <div className="text-[10px] text-muted-foreground text-right leading-tight max-w-20">
                       Upload resume to see match
                     </div>
                   </div>
