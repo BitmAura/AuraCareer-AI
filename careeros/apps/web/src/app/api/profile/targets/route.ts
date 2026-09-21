@@ -28,11 +28,16 @@ export async function PUT(req: Request) {
 
   if (isSupabaseConfigured()) {
     const sb = getServiceSupabase()!;
-    const { error } = await sb.from("profiles").upsert({
-      id: user.id,
-      career_targets: targets,
-      updated_at: new Date().toISOString(),
-    });
+    const { error } = await sb.from("profiles").upsert(
+      {
+        id: user.id,
+        email: user.email,
+        name: user.name || user.email.split("@")[0] || "User",
+        career_targets: targets,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "id" },
+    );
     if (error) return NextResponse.json({ message: error.message }, { status: 500 });
     return NextResponse.json({ targets, ready: hasUsableTargets(targets) });
   }
