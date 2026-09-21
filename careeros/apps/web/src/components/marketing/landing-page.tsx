@@ -217,7 +217,7 @@ export function LandingPage() {
           }}
         />
 
-        <div className="mx-auto flex min-h-svh max-w-6xl flex-col justify-center px-6 pb-44 pt-28 md:pb-48 md:pt-32">
+        <div className="mx-auto flex min-h-svh max-w-6xl flex-col justify-center px-6 pb-64 pt-24 md:pb-48 md:pt-32">
           <h1 className="mb-5 font-heading text-5xl font-extrabold tracking-tight text-[#12161c] md:text-7xl lg:text-8xl animate-[fadeUp_0.8s_ease_both]">
             AuraCareer AI
           </h1>
@@ -242,12 +242,12 @@ export function LandingPage() {
         </div>
 
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-[32vh] md:h-[36vh] animate-[riseIn_1.2s_ease_both]"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-44 sm:h-[30vh] md:h-[36vh] animate-[riseIn_1.2s_ease_both]"
           aria-hidden
         >
           <div className="absolute inset-0 bg-linear-to-t from-[#1a2330] via-[#1a2330]/92 to-transparent" />
-          <div className="relative mx-auto flex h-full max-w-6xl items-end px-6 pb-8">
-            <div className="grid w-full gap-3 text-[#e8ecef] md:grid-cols-3">
+          <div className="relative mx-auto flex h-full max-w-6xl items-end px-6 pb-6 md:pb-8">
+            <div className="grid w-full gap-3 text-[#e8ecef] grid-cols-2 md:grid-cols-3">
               <div className="border-l-2 border-[#c45c26] pl-4">
                 <p className="font-heading text-3xl font-bold">A 99%</p>
                 <p className="text-sm text-white/70">Grade · why this job · gaps</p>
