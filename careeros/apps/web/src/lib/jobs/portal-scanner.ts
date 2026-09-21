@@ -224,23 +224,26 @@ export async function scanManufacturingPortals(opts: {
   const exclude = opts.excludeUrls || new Set<string>();
   const kept: ExtractedJob[] = [];
 
-  // 0) India industrial OEM Workday first (JCI / KONE / Shell / Flowserve / Philips)
-  const oem = await scanIndiaOemWorkday({
-    targets: opts.targets,
-    limit,
-    excludeUrls: exclude,
-    maxBoards: 5,
-  });
-  stats.oem = oem.stats;
-  stats.boardsTried += oem.stats.boardsTried;
-  stats.boardsOk += oem.stats.boardsOk;
-  stats.rawJobs += oem.stats.rawJobs;
-  stats.rejectedLocation += oem.stats.rejectedLocation;
-  stats.rejectedFamily += oem.stats.rejectedFamily;
-  for (const job of oem.jobs) {
-    if (kept.length >= limit) break;
-    kept.push(job);
-    exclude.add(job.applyUrl);
+  // 0) India industrial OEM Workday (JCI / KONE / Shell / Flowserve / Philips) for relevant families
+  const isMfgFamily = ["plant_ops", "procurement", "trades", "it_mfg", "manufacturing"].includes(family);
+  if (isMfgFamily) {
+    const oem = await scanIndiaOemWorkday({
+      targets: opts.targets,
+      limit,
+      excludeUrls: exclude,
+      maxBoards: 5,
+    });
+    stats.oem = oem.stats;
+    stats.boardsTried += oem.stats.boardsTried;
+    stats.boardsOk += oem.stats.boardsOk;
+    stats.rawJobs += oem.stats.rawJobs;
+    stats.rejectedLocation += oem.stats.rejectedLocation;
+    stats.rejectedFamily += oem.stats.rejectedFamily;
+    for (const job of oem.jobs) {
+      if (kept.length >= limit) break;
+      kept.push(job);
+      exclude.add(job.applyUrl);
+    }
   }
 
   const boards = boardsForRoleFamily(family).slice(0, opts.maxBoards ?? 8);

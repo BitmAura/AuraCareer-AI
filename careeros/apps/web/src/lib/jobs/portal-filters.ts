@@ -18,7 +18,16 @@ export function indiaRelevantLocation(
   const loc = (location || "").toLowerCase().trim();
   if (!loc) return false;
 
-  // Explicit non-India first (catches "San Francisco, CA")
+  const isWorldwideTarget = (targets?.cities || []).some((c) =>
+    /\b(worldwide|global|any|remote|all)\b/i.test(c),
+  );
+
+  // If candidate is hunting globally/remote, allow verified global postings
+  if (isWorldwideTarget) {
+    return true;
+  }
+
+  // Explicit non-India first (catches "San Francisco, CA") when hunting domestic
   if (NON_INDIA_LOC.test(loc) && !INDIA_LOC.test(loc)) {
     return false;
   }
@@ -34,7 +43,7 @@ export function indiaRelevantLocation(
 
   if (
     targets?.openToRelocate &&
-    /\b(apac|asia|remote)\b/i.test(loc) &&
+    /\b(apac|asia|remote|worldwide)\b/i.test(loc) &&
     !NON_INDIA_LOC.test(loc)
   ) {
     return true;
