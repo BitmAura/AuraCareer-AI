@@ -57,6 +57,13 @@ export default function RegisterPage() {
             </ul>
           </div>
 
+          <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-center text-xs text-muted-foreground">
+            Evaluating or testing without creating accounts?{" "}
+            <Link href="/login" className="font-semibold text-primary hover:underline">
+              Use 1-Click Demo Login
+            </Link>
+          </div>
+
           <p className="text-center text-sm text-muted-foreground">
             Already hunting?{" "}
             <Link href="/login" className="text-primary hover:underline">

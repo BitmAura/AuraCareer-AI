@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth, type AuthUser } from "@/store/use-auth";
 import { api, ApiError } from "@/lib/api";
 
@@ -19,10 +19,14 @@ function SessionShell({ label }: { label: string }) {
   );
 }
 
+const PUBLIC_DASHBOARD_ROUTES = ["/jobs"];
+
 export default function AuthCheck({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, hydrated, hydrate, logout, setSession, token } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const [sessionChecked, setSessionChecked] = useState(false);
+  const isPublicRoute = PUBLIC_DASHBOARD_ROUTES.some((route) => pathname === route || pathname.startsWith(route + "/"));
 
   useLayoutEffect(() => {
     hydrate();
@@ -42,18 +46,18 @@ export default function AuthCheck({ children }: { children: React.ReactNode }) {
         }
         await logout();
         setSessionChecked(true);
-        router.replace("/login");
+        if (!isPublicRoute) router.replace("/login");
       } catch (e) {
         if (cancelled) return;
         if (e instanceof ApiError && (e.status === 401 || e.status === 403)) {
           await logout();
           setSessionChecked(true);
-          router.replace("/login");
+          if (!isPublicRoute) router.replace("/login");
           return;
         }
         // Network blip: keep current client session if we already have one
         setSessionChecked(true);
-        if (!isAuthenticated) router.replace("/login");
+        if (!isAuthenticated && !isPublicRoute) router.replace("/login");
       }
     })();
     return () => {
@@ -61,12 +65,12 @@ export default function AuthCheck({ children }: { children: React.ReactNode }) {
     };
     // Intentionally omit isAuthenticated — only re-check when hydrate completes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hydrated, logout, router, setSession, token]);
+  }, [hydrated, isPublicRoute, logout, router, setSession, token]);
 
   if (!hydrated || !sessionChecked) {
     return <SessionShell label="Checking session…" />;
   }
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !isPublicRoute) {
     return <SessionShell label="Redirecting to sign in…" />;
   }
 

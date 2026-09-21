@@ -72,9 +72,8 @@ function mapJobWithLiveMatch(
 
 export async function GET(req: Request) {
   const user = await getAuthUser(req);
-  if (!user) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-
-  const { profileText, targets } = await loadMatchContext(user.id);
+  const context = user ? await loadMatchContext(user.id) : { profileText: "", targets: emptyTargets() };
+  const { profileText, targets } = context;
 
   if (isSupabaseConfigured()) {
     const sb = getServiceSupabase()!;

@@ -55,7 +55,7 @@ export function Header() {
       <p className="text-sm text-muted-foreground">{getPageTitle()}</p>
 
       <div className="flex items-center gap-3">
-        {user && (
+        {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
@@ -98,6 +98,15 @@ export function Header() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Button size="sm" variant="ghost" render={<Link href="/login" />}>
+              Sign in
+            </Button>
+            <Button size="sm" render={<Link href="/register" />}>
+              Start free
+            </Button>
+          </div>
         )}
       </div>
     </header>

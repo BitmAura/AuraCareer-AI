@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { api, ApiError } from "@/lib/api";
 import type { JobRecord, ResumeRecord } from "@/lib/db/types";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/store/use-auth";
 
 type JobRow = JobRecord & {
   matchLive?: boolean;
@@ -27,6 +28,7 @@ export default function JobsPage() {
   const [search, setSearch] = useState("");
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
   const { data: jobs = [], isLoading, error } = useQuery({
     queryKey: ["jobs"],
@@ -36,20 +38,28 @@ export default function JobsPage() {
   const { data: resumes = [] } = useQuery({
     queryKey: ["resumes"],
     queryFn: () => api<ResumeRecord[]>("/resume"),
+    enabled: isAuthenticated,
   });
 
   const trackMutation = useMutation({
-    mutationFn: (job: JobRow) =>
-      api<{ applyUrl?: string | null }>("/applications", {
+    mutationFn: (job: JobRow) => {
+      if (!isAuthenticated) {
+        router.push("/login?error=" + encodeURIComponent("Sign in to track jobs in your sovereign application tracker."));
+        return Promise.resolve({ applyUrl: job.sourceUrl });
+      }
+      return api<{ applyUrl?: string | null }>("/applications", {
         method: "POST",
         body: { jobId: job.id },
-      }),
+      });
+    },
     onSuccess: (res, job) => {
-      const url = res.applyUrl || job.sourceUrl;
+      const url = res?.applyUrl || job.sourceUrl;
       if (url) {
         window.open(url, "_blank", "noopener,noreferrer");
-        toast.success("Opened careers — mark Applied in Applications after you submit their form");
-      } else {
+        if (isAuthenticated) {
+          toast.success("Opened careers — mark Applied in Applications after you submit their form");
+        }
+      } else if (isAuthenticated) {
         toast.success("Logged — apply on the company site, then update status to Applied");
       }
       queryClient.invalidateQueries({ queryKey: ["applications"] });
@@ -61,6 +71,10 @@ export default function JobsPage() {
 
   const tailorMutation = useMutation({
     mutationFn: (jobId: string) => {
+      if (!isAuthenticated) {
+        router.push("/login?error=" + encodeURIComponent("Sign in to generate tailored LaTeX resumes and cover letters."));
+        return Promise.resolve();
+      }
       const resumeId = resumes[0]?.id;
       if (!resumeId) throw new Error("Upload a resume first");
       return api("/ai/optimize-for-job", {
@@ -69,6 +83,7 @@ export default function JobsPage() {
       });
     },
     onSuccess: () => {
+      if (!isAuthenticated) return;
       toast.success("Tailored resume + cover letter saved under Resume → Versions");
       router.push("/resume");
     },
@@ -99,6 +114,24 @@ export default function JobsPage() {
           />
         }
       />
+
+      {!isAuthenticated && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-lg border border-primary/20 bg-primary/5 p-4">
+          <div>
+            <p className="text-sm font-semibold text-foreground">
+              You are exploring verified positions in Public Preview mode
+            </p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Sign in or test with our 1-click Demo Account to unlock personalized ATS match scores, LaTeX resume tailoring, and the Daily Apply Queue.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Button size="sm" render={<Link href="/login" />}>
+              Sign in / Demo
+            </Button>
+          </div>
+        </div>
+      )}
 
       <p className="text-sm text-muted-foreground">
         Openings scored and matched against your target profile and resume. Prefer the{" "}
