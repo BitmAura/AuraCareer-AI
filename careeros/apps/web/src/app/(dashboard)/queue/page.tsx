@@ -380,48 +380,9 @@ export default function DailyQueuePage() {
       </div>
 
       <p className="text-sm text-muted-foreground">
-        OEM Workday + Greenhouse first (JCI, KONE, Shell, Flowserve, Philips, Fictiv, Xometry).
-        Ballari plants like JSW / Janki usually hire via their own careers page, walk-in forms, or
-        resume email — not those ATS feeds — so paste that JD/URL here. LinkedIn/Naukri are never
-        scraped.
+        Direct ATS discovery runs across verified employer portals (Greenhouse, Lever, Ashby, Workday).
+        Matches are filtered strictly to active public openings. You can also paste any custom job link or JD below to synthesize tailored application packets.
       </p>
-
-      {targetsInfo?.targets?.cities?.some((c) =>
-        /ballari|bellary|toranagallu|vijayanagar|hosapet|hospet|koppal/i.test(c),
-      ) && (
-        <div className="rounded-lg border border-border bg-muted/30 px-4 py-3 text-sm space-y-2">
-          <p className="font-medium text-foreground">Ballari plant belt — how hiring actually works</p>
-          <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
-            <li>
-              <a
-                className="underline"
-                href="https://www.jsw.in/careers/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                JSW Vijayanagar
-              </a>{" "}
-              — careers site / walk-ins (no public Workday API)
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.jankicorp.com/careers/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Janki Corp
-              </a>{" "}
-              — share resume on careers page
-            </li>
-            <li>Minera / nearby Koppal steel — often email or LinkedIn; paste the posting into queue</li>
-          </ul>
-          <p className="text-xs text-muted-foreground">
-            Daily search still runs pan-India OEMs. For local plant seats: open the link → copy JD or
-            apply URL → Paste below.
-          </p>
-        </div>
-      )}
 
       {targetsInfo && !targetsInfo.ready && (
         <div className="rounded-lg border border-amber-500/40 bg-amber-500/5 px-4 py-3 text-sm">
@@ -451,38 +412,33 @@ export default function DailyQueuePage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
             <ClipboardPaste className="h-4 w-4" />
-            Paste Naukri / LinkedIn alert / career-page JD
+            Paste Custom Job Link or Job Description
           </CardTitle>
           <CardDescription>
-            Public careers URL (Greenhouse / Lever / Ashby / company careers):{" "}
-            {enginesInfo?.jobUrlExtract?.primary === "tinyfish"
-              ? "TinyFish Fetch scrapes the live page"
-              : "native fetch (add TINYFISH_API_KEY for JS-rendered pages)"}
-            . Or paste a LinkedIn/Naukri job-alert email — we pull links, never log into LinkedIn.
-            Adds one queue seat (does not use a search credit).
+            Found a role elsewhere? Paste the public job URL or copy-paste the description. AuraCareer AI will extract requirements, calculate your ATS match grade, and draft a tailored packet. Adds one queue seat without consuming search credits.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-2 md:grid-cols-2">
           <Input
-            placeholder="Job title"
+            placeholder="Job title (e.g. Digital Marketing Specialist)"
             value={paste.title}
             onChange={(e) => setPaste({ ...paste, title: e.target.value })}
           />
           <Input
-            placeholder="Company"
+            placeholder="Company (e.g. Google, InMobi)"
             value={paste.company}
             onChange={(e) => setPaste({ ...paste, company: e.target.value })}
           />
           <Input
             className="md:col-span-2"
-            placeholder="Public job URL (Greenhouse / Lever / Ashby / careers page)"
+            placeholder="Public job URL (Greenhouse, Lever, Workday, or company careers page)"
             value={paste.applyUrl}
             onChange={(e) => setPaste({ ...paste, applyUrl: e.target.value })}
           />
           <Textarea
             className="md:col-span-2"
             rows={4}
-            placeholder="Paste full JD — or forward/paste a LinkedIn / Naukri job alert email…"
+            placeholder="Paste full job description or job alert details…"
             value={paste.description}
             onChange={(e) => setPaste({ ...paste, description: e.target.value })}
           />
@@ -520,7 +476,7 @@ export default function DailyQueuePage() {
         <EmptyState
           icon="inbox"
           title="No matches queued today"
-          description="Run Morning / Midday / Evening search against live OEM Workday / Greenhouse seats. Catalog seeds are never queued as fake openings. Or paste a real JD URL."
+          description="Click 'Run search' to discover active openings matched to your profile from direct company ATS portals (Greenhouse, Lever, Ashby, Workday). Or paste a job link above."
           action={{
             label: canRun ? "Run search" : "Limit reached",
             onClick: () => canRun && digestMutation.mutate(),
