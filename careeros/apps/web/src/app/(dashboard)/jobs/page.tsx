@@ -143,18 +143,25 @@ export default function JobsPage() {
                     )}
                   </CardDescription>
                 </div>
-                {typeof job.matchScore === "number" && (
+                {typeof job.matchScore === "number" && job.matchLive && job.matchGrade && job.matchGrade !== "F" ? (
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-green-600">{job.matchScore}%</div>
+                    <div className={`text-2xl font-bold ${
+                      ["A","A+"].includes(job.matchGrade ?? "") ? "text-emerald-500" :
+                      ["B","B+"].includes(job.matchGrade ?? "") ? "text-green-500" :
+                      ["C","C+"].includes(job.matchGrade ?? "") ? "text-yellow-500" :
+                      "text-orange-400"
+                    }`}>{job.matchScore}%</div>
                     <div className="text-xs text-muted-foreground">
-                      {job.matchLive
-                        ? job.matchGrade
-                          ? `Grade ${job.matchGrade}`
-                          : "Live match"
-                        : "Seed rank"}
+                      Grade {job.matchGrade}
                     </div>
                   </div>
-                )}
+                ) : resumes.length === 0 ? (
+                  <div className="text-right shrink-0">
+                    <div className="text-[10px] text-muted-foreground text-right leading-tight max-w-[80px]">
+                      Upload resume to see match
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </CardHeader>
             <CardContent>
